@@ -10,7 +10,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
 
-![final mark](resources/Camagru-finalmark.png)
+![final mark](resources/Hypertube-finalmark.png)
 
 ## Front-end
 
