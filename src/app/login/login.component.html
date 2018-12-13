@@ -1,0 +1,17 @@
+<form [formGroup]="loginform">
+
+  Value:{{loginform.value | json}} 
+  <hr>
+
+
+  <mat-form-field>
+    <input class="form" matInput placeholder="email" formControlName="email">
+  </mat-form-field>
+  <hr>
+  <mat-form-field>
+    <input class="form" matInput placeholder="name" formControlName="name">
+  </mat-form-field>
+  <mat-form-field>
+    <input class="form" matInput placeholder="career" formControlName="career">
+  </mat-form-field>
+</form>

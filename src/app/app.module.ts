@@ -6,29 +6,69 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatCardModule } from '@angular/material';
+//Imports for Angular Material login components
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatChipsModule} from '@angular/material/chips';
+//imports for progress bars
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+//imports for Angular firebase
 import { AngularFireModule } from '@angular/fire';  
-import { environment } from '../environments/environment';   
-
+import { environment } from '../environments/environment';
+//Components
+import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component';
+import { SettingsComponent } from './settings/settings.component';
+import { HomeComponent } from './home/home.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { UsersComponent } from './users/users.component';   
+//Language selector
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+//Forms
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    LoginComponent,
+    AboutComponent,
+    SettingsComponent,
+    HomeComponent,
+    FeedbackComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
+    //Imports for Angular Material design
+    MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,
+    //Imports for Angular Material login components
+    MatInputModule, MatFormFieldModule,  MatCheckboxModule,  MatChipsModule, 
+    MatCardModule, MatProgressSpinnerModule, MatProgressBarModule,
+    //Language selector
+    MatButtonToggleModule,
+    //Forms
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase) 
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+/*
+  // loginform : FormGroup;
+  //Add form builder service
+  // constructor(private fb: FormBuilder) {
+  //   this.loginform =this.fb.group({
+  //     'name': '',
+  //     'career': '',
+  //   });
+  //  }
+*/

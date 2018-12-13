@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-
+  apptitle = 'Hypertube';
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
