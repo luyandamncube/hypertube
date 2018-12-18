@@ -29,6 +29,7 @@ import { UsersComponent } from './users/users.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 //Forms
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SettingsComponent,
     HomeComponent,
     FeedbackComponent,
-    UsersComponent
+    UsersComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

@@ -27,6 +27,7 @@
         <mat-hint> Must be at least 8 characters long </mat-hint>
         <!-- <mat-icon ng-click="showpass = !showpass" matSuffix>remove_red_eye</mat-icon> -->
   </mat-form-field>
-  <button mat-flat-button routerLink="/signup" >Sign up</button>
-  <button mat-button style="float: right; background-color: LightGray; ">Sign in</button>
+  <button mat-flat-button routerLink="../signup" >Sign up</button>
+  <button [disabled]="!loginform.valid" style="float : right" mat-button>Sign in</button>
+  <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
 </form>
