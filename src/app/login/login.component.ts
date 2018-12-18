@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 //Use these to build forms
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+// import { AngularFirestore } from '@angular/fire';
+import { tap, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +10,28 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  // name = new FormControl('');
   loginform : FormGroup;
   //Add form builder service
   constructor(private fb : FormBuilder) {}
 
   ngOnInit() {
-    this.loginform =this.fb.group({
-      'email': ['', Validators.required],
-      'name': ['', Validators.required],
-      'career': '',
+    this.loginform = this.fb.group({
+      email: ['', [
+        Validators.required, 
+        Validators.email,
+      ]],
+      password: ['', [
+        Validators.required, 
+        Validators.minLength(8),
+      ]],
     });
+  }
+  //Accessors for ngIF error handling
+  get email(){
+    return this.loginform.get('email');
+  }
+  get password(){
+    return this.loginform.get('password');
   }
 
 }
