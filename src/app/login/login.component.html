@@ -5,7 +5,7 @@
     <p>Continue to hypertube</p>
 </div>
 
-<div style="margin-left: auto;
+<div style="text-align : center; margin-left: auto;
   margin-right: auto; height : 360px; width : 360px">
 
 <form [formGroup]="loginform">
@@ -13,7 +13,7 @@
   Value:{{loginform.value | json}} 
   <hr>
 
-  <mat-form-field appearance="outline" style="width:100%;">
+  <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Email or username</mat-label>
     <input id="email" matInput formControlName="email" placeholder="Email">
     <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
@@ -21,7 +21,7 @@
   </mat-form-field>
   
 
-  <mat-form-field appearance="outline" style="width:100%;">
+  <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Password</mat-label>
     <input matInput type="password" formControlName="password" placeholder="Password">
         <mat-error *ngIf="password.value == ''"> Please enter email </mat-error>
@@ -29,7 +29,9 @@
         <mat-hint> Must be at least 8 characters long </mat-hint>
         <!-- <mat-icon ng-click="showpass = !showpass" matSuffix>remove_red_eye</mat-icon> -->
   </mat-form-field>
-  <button mat-flat-button routerLink="../signup" >Sign up</button>
-  <button [disabled]="!loginform.valid" style="float : right" mat-button>Sign in</button>
+  
   <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
 </form>
+<button mat-flat-button style="padding: 0px 0px 0px 50px;float : left" routerLink="../signup" >Sign up</button>
+  <button [disabled]="!loginform.valid" style="padding: 0px 50px 0px 0px;float : right" mat-button>Sign in</button>
+</div>

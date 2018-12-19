@@ -4,21 +4,21 @@
     <p>Continue to hypertube</p>
 </div>
 
-<div style="margin-left: auto; margin-right: auto; height : 360px; width : 360px">
+<div style="text-align : center; margin-left: auto; margin-right: auto; height : 360px; width : 360px">
 
 <form [formGroup]="signupform" [hidden]="success" (ngSubmit)="submitHandler()">
 
   Value:{{signupform.value | json}} 
   <hr>
-  <mat-form-field appearance="outline" style="width:100%;">
+  <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Username</mat-label>
     <input id="username" matInput formControlName="username" placeholder="Username">
      <mat-error *ngIf="username.value == ''"> Please enter username </mat-error>
     <mat-error *ngIf="username.invalid && username.value"> Your username does not look right </mat-error>
-    <mat-hint> Must be at least 5 characters long, no special chacters </mat-hint>
+    <mat-hint> 5 characters long, no special chacters </mat-hint>
   </mat-form-field>
 
-  <mat-form-field appearance="outline" style="width:100%;">
+  <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Email</mat-label>
     <input id="email" matInput formControlName="email" placeholder="Email">
     <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
@@ -26,7 +26,7 @@
   </mat-form-field>
   
 
-  <mat-form-field appearance="outline" style="width:100%;">
+  <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Password</mat-label>
     <input matInput type="password" formControlName="password" placeholder="Password">
         <mat-error *ngIf="password.value == ''"> Please enter email </mat-error>
@@ -34,7 +34,7 @@
         <mat-hint> Must be at least 8 characters long </mat-hint>
   </mat-form-field>
 
-    <mat-form-field appearance="outline" style="width:100%;">
+    <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Confirm</mat-label>
     <input matInput type="confirm" formControlName="confirm" placeholder="Confirm password">
         <!-- <mat-error *ngIf="signupform.hasError('notSame')"> Passwords do not match </mat-error> -->
@@ -42,10 +42,12 @@
          <mat-error *ngIf="signupform.controls.confirm.errors?.checkPasswords && password.value"> Passwords do not match </mat-error>
         <!-- <mat-icon ng-click="showpass = !showpass" matSuffix>remove_red_eye</mat-icon> -->
   </mat-form-field>
-  <button mat-flat-button routerLink="../login" >Login</button>
-  <button [disabled]="!signupform.valid" style="float : right" mat-button>Sign in</button>
+  <button mat-flat-button style="padding: 0px 0px 0px 50px;float : left" routerLink="../login" >Login</button>
+  <button [disabled]="!signupform.valid" style="padding: 0px 50px 0px 0px;float : right" mat-button>Sign in</button>
   <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
 </form>
+</div>
+
 <div style="margin-left: auto; margin-right: auto;" *ngIf="success">
   Congratulations! your hypetube account has been created.
 
