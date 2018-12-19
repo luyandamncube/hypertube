@@ -16,7 +16,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 //imports for Angular firebase
-import { AngularFireModule } from '@angular/fire';  
+import { AngularFireModule } from '@angular/fire'; 
 import { environment } from '../environments/environment';
 //Components
 import { LoginComponent } from './login/login.component';
@@ -30,6 +30,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 //Forms
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
+//Database
+import { AngularFirestore,  } from '@angular/fire/firestore'; 
 
 @NgModule({
   declarations: [
@@ -59,18 +61,7 @@ import { SignupComponent } from './signup/signup.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase) 
   ],
-  providers: [],
+  providers: [AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-/*
-  // loginform : FormGroup;
-  //Add form builder service
-  // constructor(private fb: FormBuilder) {
-  //   this.loginform =this.fb.group({
-  //     'name': '',
-  //     'career': '',
-  //   });
-  //  }
-*/

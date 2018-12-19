@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 //Use these to build forms
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-// import { AngularFirestore,  } from '@angular/fire/firestore';
-// import { tap, first } from 'rxjs/operators';
+import { AngularFirestore,  } from '@angular/fire/firestore';
+import { tap, first } from 'rxjs/operators';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -10,8 +10,9 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class SignupComponent implements OnInit {
   signupform : FormGroup;
-  constructor(private fb : FormBuilder, /*private afs : AngularFirestore*/) {}
-
+  constructor(private fb : FormBuilder, private afs : AngularFirestore) {}
+  //Regex, aplhanumeric characters only
+  includes = "[a-zA-Z0-9]*";
   //Asynchronous form states
   loading = false;
   success = false;
@@ -28,6 +29,7 @@ export class SignupComponent implements OnInit {
       username: ['', [
         Validators.required,
         Validators.minLength(5),
+        Validators.pattern(this.includes),
       ]],    
       email: ['', [
         Validators.required, 
@@ -44,7 +46,7 @@ export class SignupComponent implements OnInit {
     }, {validators: this.checkPasswords });
   }
 
-
+  //Accessors for ngIF error handling
   get username(){
     return this.signupform.get('username');
   }
@@ -57,20 +59,28 @@ export class SignupComponent implements OnInit {
   get confirm(){
     return this.signupform.get('confirm');
   }
-/*
+  /*
+firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+  */
+
   async submitHandler(){
     this.loading = true;
 
-    const formValue = this.signupform.value;
+    var formValue = this.signupform.value;
     try{
-      await this.afs.collection('contacts').add(formValue);
+      await this.afs.collection('users').add(formValue);
+      console.log(formValue);
+      this.success = true;
     }catch(err){
-
+      console.log(err);
     }
-
   }
-  */
 
-    //Accessors for ngIF error handling
+
 
 }
