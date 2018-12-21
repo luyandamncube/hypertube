@@ -7,20 +7,39 @@ import { SettingsComponent } from './settings/settings.component';
 import { UsersComponent } from './users/users.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { HomeComponent } from './home/home.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { NavComponent } from './nav/nav.component';
 // import { HomeComponent } from './home/home.component';
 // import { ContactComponent } from './contact/contact.component';
 const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'settings', component: SettingsComponent},
-  {path: 'home', component: HomeComponent},
-  { path: '', component: HomeComponent },
-  {path: 'users', component: UsersComponent},
-  {path: 'feedback', component: FeedbackComponent},
+  //Redirect to 404 page if page error
+  // {path: '**', redirectTo: 'notfound'},
+  //auxilliary routing
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  {
+    path: 'home', component: HomeComponent,
+    children: [
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        outlet: 'home',
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        outlet: 'home',
+      },
+      {
+        path: 'feedback',
+        component: FeedbackComponent,
+        outlet: 'home',
+      },
 
-   // {path: 'contact', component: ContactComponent},
-  // { path: '', component: HomeComponent },
+    ]
+  },
 ];
 
 @NgModule({

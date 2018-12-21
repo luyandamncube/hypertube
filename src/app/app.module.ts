@@ -32,7 +32,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 //Database
-import { AngularFirestore,  } from '@angular/fire/firestore'; 
+import { AngularFirestore,  } from '@angular/fire/firestore';
+import { NotfoundComponent } from './notfound/notfound.component'; 
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AngularFirestore,  } from '@angular/fire/firestore';
     HomeComponent,
     FeedbackComponent,
     UsersComponent,
-    SignupComponent
+    SignupComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,
