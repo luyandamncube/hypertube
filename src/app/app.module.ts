@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
 //imports for progress bars
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -55,10 +56,12 @@ import { NotfoundComponent } from './notfound/notfound.component';
     // BrowserAnimationsModule,
     LayoutModule,
     //Imports for Angular Material design
-    MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule,
+    MatToolbarModule, MatButtonModule, MatSidenavModule,
+     MatIconModule, MatListModule, MatExpansionModule,
     //Imports for Angular Material login components
-    MatInputModule, MatFormFieldModule,  MatCheckboxModule,  MatChipsModule, 
-    MatCardModule, MatProgressSpinnerModule, MatProgressBarModule,
+    MatInputModule, MatFormFieldModule,  MatCheckboxModule,  
+    MatChipsModule, MatCardModule, MatProgressSpinnerModule, 
+    MatProgressBarModule,
     //Language selector
     MatButtonToggleModule,
     //Forms
