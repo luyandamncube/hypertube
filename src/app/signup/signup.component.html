@@ -2,7 +2,10 @@
 <div style="text-align : center; margin-left: auto; margin-right: auto; width : 360px; padding: 40px 0px 0px 0px">
     <img style = "height: 50px;" src="assets/03.png">
     <h1>Create account</h1>
-    <p>Continue to hypertube</p>
+    <div style="margin-left: auto; margin-right: auto; text-align : center;" *ngIf="success">
+      <p> Congratulations! your hypetube account has been created.</p>
+      <button mat-flat-button style="background-color: LightGray;" routerLink="../login" >Login</button>
+    </div>
 </div>
 
 <div style="text-align : center; margin-left: auto; margin-right: auto; height : 360px; width : 360px">
@@ -45,13 +48,9 @@
         <!-- <mat-icon ng-click="showpass = !showpass" matSuffix>remove_red_eye</mat-icon> -->
   </mat-form-field>
   <div style="margin-left: auto; margin-right: auto; width :80%">
-    <button mat-flat-button style="background-color: LightGray; float:left" routerLink="../login" >Login</button>
+    <button color="primary" mat-flat-button style="background-color: LightGray; float:left" routerLink="../login" >Login</button>
     <button [disabled]="!signupform.valid" style="float:right" mat-button>Sign in</button>
   </div>
     <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
 </form>
-</div>
-
-<div style="margin-left: auto; margin-right: auto;" *ngIf="success">
-  Congratulations! your hypetube account has been created.
 </div>
