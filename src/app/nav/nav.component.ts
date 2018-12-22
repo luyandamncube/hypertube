@@ -2,6 +2,15 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+//Imports for Angular Routing Loading Indicator
+import {
+  Event,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router
+} from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -14,7 +23,27 @@ export class NavComponent {
     .pipe(
       map(result => result.matches)
     );
+  //Constructor injection for Angular Routing Loading Indicator
+  loading = false;
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+    this.router.events.subscribe((event: Event) => {
+      switch (true) {
+        case event instanceof NavigationStart: {
+          this.loading = true;
+          break;
+        }
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError: {
+          this.loading = false;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    });
 
+  }
 }

@@ -13,32 +13,33 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  // {path: '**', component: NotfoundComponent},
-  //Redirect to 404 page if page error
-  // {path: '**', redirectTo: 'notfound'},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent},
   //auxilliary routing
-  { path: '', redirectTo: '/home', pathMatch: 'full'},
   {
     path: 'home', component: HomeComponent,
     children: [
       {
         path: 'settings',
         component: SettingsComponent,
-        outlet: 'home',
+        outlet: 'index',
       },
       {
         path: 'users',
         component: UsersComponent,
-        outlet: 'home',
+        outlet: 'index',
       },
       {
         path: 'feedback',
         component: FeedbackComponent,
-        outlet: 'home',
+        outlet: 'index',
       },
 
     ]
   },
+  //Redirect to 404 page if page error, always put this AFTER ALL routes are defined!
+  {path: '404', component: NotfoundComponent},
+  {path: '**', redirectTo: '404'},
 ];
 
 @NgModule({

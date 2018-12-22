@@ -6,11 +6,11 @@
     <mat-toolbar >{{apptitle}}<span style="width : 50px"> <img style="height : 30px; float: right" src="../assets/03.png" ></span></mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/'">Home</a>
-      <a mat-list-item [routerLink]="[{ outlets: { home: ['users'] } }]">Users</a>
-      <a mat-list-item [routerLink]="[{ outlets: { home: ['feedback'] } }]">Feedback</a>
+      <a mat-list-item [routerLink]="[{ outlets: { index: ['users'] } }]">Users</a>
+      <a mat-list-item [routerLink]="[{ outlets: { index: ['feedback'] } }]">Feedback</a>
       <mat-divider></mat-divider>
       <a mat-list-item [routerLink]="'/about'">About</a>
-      <a mat-list-item [routerLink]="[{ outlets: { home: ['settings'] } }]">Settings</a>
+      <a mat-list-item [routerLink]="[{ outlets: { index: ['settings'] } }]">Settings</a>
       <a mat-list-item [routerLink]="''">Logout</a>
       <a mat-list-item [routerLink]="'/login'">Login (demo)</a>
     </mat-nav-list>
@@ -41,7 +41,7 @@
             
     <section>
     <!-- where routed components will appear-->
-      <router-outlet name="home"></router-outlet>
+      <router-outlet name="index"></router-outlet>
     </section>
   </mat-sidenav-content>
 </mat-sidenav-container>
