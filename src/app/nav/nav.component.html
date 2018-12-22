@@ -3,7 +3,7 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="!(isHandset$ | async)">
-    <mat-toolbar>{{apptitle}}<span style="width : 50px"> <img style="height : 30px; float: right" src="../assets/03.png" ></span></mat-toolbar>
+    <mat-toolbar >{{apptitle}}<span style="width : 50px"> <img style="height : 30px; float: right" src="../assets/03.png" ></span></mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="'/'">Home</a>
       <a mat-list-item [routerLink]="[{ outlets: { home: ['users'] } }]">Users</a>
@@ -26,16 +26,19 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       
-      <span class="spacer"></span>
+      
       <div class="topnav">
-      <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle style="font color: white" value="bold">EN</mat-button-toggle>
-        <mat-button-toggle value="italic">FR</mat-button-toggle>
-      </mat-button-toggle-group>
+          <!-- Add Navbar Content Here -->
+        <mat-form-field style="width:70%;" floatLabel="never">
+          <input matInput placeholder="Search">
+        </mat-form-field>
+          <!-- <a href="#"><mat-icon>search</mat-icon></a> -->
        </div>
     </mat-toolbar>
-    <!-- Add Content Here -->
-        
+    <mat-progress-bar
+      *ngIf="loading" color="accent" mode="indeterminate">
+    </mat-progress-bar>
+            
     <section>
     <!-- where routed components will appear-->
       <router-outlet name="home"></router-outlet>

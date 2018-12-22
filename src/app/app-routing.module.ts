@@ -8,13 +8,12 @@ import { UsersComponent } from './users/users.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
-import { NavComponent } from './nav/nav.component';
-// import { HomeComponent } from './home/home.component';
-// import { ContactComponent } from './contact/contact.component';
+// import { NavComponent } from './nav/nav.component';
 const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  // {path: '**', component: NotfoundComponent},
   //Redirect to 404 page if page error
   // {path: '**', redirectTo: 'notfound'},
   //auxilliary routing
