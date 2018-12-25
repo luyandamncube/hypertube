@@ -8,16 +8,20 @@ import { UsersComponent } from './users/users.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+
+//Auth
+import { AuthGuard } from './services/auth-guard.service';
+
 // import { NavComponent } from './nav/nav.component';
 const routes: Routes = [
-  {path: 'about', component: AboutComponent},
+  {path: 'about', canActivate: [AuthGuard], component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
   //auxilliary routing
   {
-    path: 'home', component: HomeComponent,
+    path: 'home', canActivate: [AuthGuard], component: HomeComponent,
     children: [
       {
         path: 'settings',

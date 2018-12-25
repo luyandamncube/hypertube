@@ -21,7 +21,7 @@
   text-align : center; 
   margin-left: auto; 
   margin-right: auto; 
-  width: 100%
+  width: 100%;
 
 }
 .spacer{
@@ -32,6 +32,13 @@
   margin: 0 10px;
   color: white;
   text-decoration: none;
+}
+.dp{
+  border-radius : 50px;
+  height: 40px;
+  // float: bottom;
+  // padding: 20px 0px 0px 0px;
+  // top : 30px;
 }
 /*
 @media (min-width: 599px){

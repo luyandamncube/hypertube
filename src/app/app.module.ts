@@ -14,12 +14,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
+//Import for dropdown menu
+import {MatMenuModule} from '@angular/material/menu';
 //imports for progress bars
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 //imports for Angular firebase
 import { AngularFireModule } from '@angular/fire'; 
 import { environment } from '../environments/environment';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 //Components
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
@@ -35,6 +39,9 @@ import { SignupComponent } from './signup/signup.component';
 //Database
 import { AngularFirestore,  } from '@angular/fire/firestore';
 import { NotfoundComponent } from './notfound/notfound.component'; 
+//Auth Services
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -57,18 +64,21 @@ import { NotfoundComponent } from './notfound/notfound.component';
     LayoutModule,
     //Imports for Angular Material design
     MatToolbarModule, MatButtonModule, MatSidenavModule,
-     MatIconModule, MatListModule, MatExpansionModule,
-    //Imports for Angular Material login components
+    MatIconModule, MatListModule, MatExpansionModule,
     MatInputModule, MatFormFieldModule,  MatCheckboxModule,  
     MatChipsModule, MatCardModule, MatProgressSpinnerModule, 
-    MatProgressBarModule,
+    MatMenuModule, MatProgressBarModule,
     //Language selector
     MatButtonToggleModule,
     //Forms
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase) 
+    AngularFireModule.initializeApp(environment.firebase), 
+    //Auth
+    AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
-  providers: [AngularFirestore],
+  providers: [AngularFirestore, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

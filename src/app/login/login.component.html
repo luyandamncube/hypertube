@@ -1,22 +1,22 @@
 
 <div style="text-align : center; margin-left: auto;
-  margin-right: auto; width : 360px; padding: 40px 0px 0px 0px">
+  margin-right: auto; width : 360px; padding: 30px 0px 0px 0px">
     <img style = "height: 50px;" src="assets/03.png">
     <h1>Sign in</h1>
-    <p>Continue to hypertube</p>
+    <!-- <p>Continue to hypertube</p> --> 
 </div>
 
 <div style="text-align : center; margin-left: auto;
   margin-right: auto; height : 360px; width : 360px">
 
 <form [formGroup]="loginform">
-<!-- 
+<!--
   Value:{{loginform.value | json}} 
   <hr>
 -->
   <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Email or username</mat-label>
-    <input id="email" matInput formControlName="email" placeholder="Email">
+    <input autocomplete="email" matInput formControlName="email" placeholder="Email">
     <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
     <mat-error *ngIf="email.invalid && email.value"> Your email does not look right </mat-error>
   </mat-form-field>
@@ -24,17 +24,35 @@
 
   <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Password</mat-label>
-    <input matInput type="password" formControlName="password" placeholder="Password">
+    <input autocomplete="password" matInput type="password" formControlName="password" placeholder="Password">
         <mat-error *ngIf="password.value == ''"> Please enter email </mat-error>
         <mat-error *ngIf="password.invalid && password.value"> Your password does not look right </mat-error>
         <mat-hint> Must be at least 8 characters long </mat-hint>
         <!-- <mat-icon ng-click="showpass = !showpass" matSuffix>remove_red_eye</mat-icon> -->
   </mat-form-field>
-  
+    <div style="margin-left: auto; margin-right: auto; padding : 10px 0px 0px 0px;width :80%">
+    <button mat-flat-button  style=" float:left" routerLink="../signup" >Sign up</button>
+    <button [disabled]="!loginform.valid" (click)="signInWithEmail(email.value, password.value)" 
+    color="primary" style="background-color: lightgrey; float:right" mat-button>Sign in</button>
+  </div>
   <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
 </form>
-  <div style="margin-left: auto; margin-right: auto; padding : 20px 0px 0px 0px;width :80%">
-    <button mat-flat-button  style="background-color: lightgrey; float:left" routerLink="../signup" >Sign up</button>
-    <button [disabled]="!loginform.valid" color="primary" style="float:right" mat-button>Sign in</button>
+
+ <br><br>
+  <div style="margin-left: auto; margin-right: auto; padding : 10px 0px 0px 0px;width :80%">
+    <button  mat-flat-button class="btn fb_btn"(click)="signInWithFacebook()">
+      <i class="fa fa-facebook" aria-hidden="true"></i> 
+      Continue with Facebook
+    </button>
+<br><br>
+    <button mat-flat-button class="google_btn"  (click)="signInWithGoogle()">
+      <i class="fa fa-google" aria-hidden="true"></i> 
+      Continue with Google
+    </button>
+<br><br>
+    <button color="primary" mat-flat-button class="fortytwo_btn"  (click)="signInWith42()">
+      <i class="fa fa-google" aria-hidden="true"></i> 
+      Continue with 42
+    </button>
   </div>
 </div>

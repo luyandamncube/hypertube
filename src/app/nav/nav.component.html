@@ -28,7 +28,6 @@
         <a mat-list-item [routerLink]="'/'">My favorites</a>
       </mat-expansion-panel>
 
-
       <mat-expansion-panel>
         <mat-expansion-panel-header>
          <mat-panel-title> Tools </mat-panel-title>
@@ -43,17 +42,15 @@
          <mat-panel-title> People </mat-panel-title>
         </mat-expansion-panel-header>
           <a mat-list-item [routerLink]="'/'">My profile</a>
-          <a mat-list-item [routerLink]="[{ outlets: { index: ['users'] } }]">Users</a>
+          <a mat-list-item [routerLink]="[{ outlets: { index: ['users'] }}]">Users</a>
       </mat-expansion-panel>
 
     </mat-accordion>
 
 
-      <mat-divider></mat-divider>
+    <mat-divider></mat-divider>
+    <!-- <a mat-list-item [routerLink]="'/login'">Login (demo)</a> -->
 
-      
-      <a mat-list-item [routerLink]="''">Logout</a>
-      <a mat-list-item [routerLink]="'/login'">Login (demo)</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content >
@@ -70,11 +67,14 @@
       
       <div class="topnav">
           <!-- Add Navbar Content Here -->
-        <mat-form-field style="width:70%;" floatLabel="never">
-          <input matInput placeholder="Search">
-        </mat-form-field>
-          <!-- <a href="#"><mat-icon>search</mat-icon></a> -->
-       </div>
+
+       
+        <a style="height: 100%; float: right; align-items: bottom;" [routerLink]="'/'" ><img [matMenuTriggerFor]="menu"class="dp" src="{{current_dp}}"></a>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Language</button>
+          <button mat-menu-item (click)="logout()">Sign Out</button>
+        </mat-menu>
+      </div>
     </mat-toolbar>
     <mat-progress-bar
       *ngIf="loading" color="accent" mode="indeterminate">

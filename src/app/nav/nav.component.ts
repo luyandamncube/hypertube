@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 //Imports for Angular Routing Loading Indicator
+
+//Auth
+import { AuthService } from '../services/auth.service';
+
 import {
   Event,
   NavigationCancel,
@@ -23,9 +27,19 @@ export class NavComponent {
     .pipe(
       map(result => result.matches)
     );
+  current_username = "";
+  current_email = "";
+  current_dp= "";
   //Constructor injection for Angular Routing Loading Indicator
   loading = false;
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+  constructor(
+    private breakpointObserver: BreakpointObserver, 
+    private authService: AuthService, 
+    private router: Router, 
+    private ngZone: NgZone,
+
+  ){
+
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
@@ -44,6 +58,17 @@ export class NavComponent {
         }
       }
     });
+    if (authService.isLoggedIn()){
+      this.current_username = authService.getUsername();
+      this.current_email = authService.getEmail();
+      this.current_dp = authService.getDisplayPic();
+    }
 
+
+  }
+  
+  logout() {
+    this.authService.logout();
+    this.ngZone.run(() => this.router.navigate(['/']));
   }
 }
