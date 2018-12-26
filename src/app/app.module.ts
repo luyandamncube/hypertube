@@ -42,6 +42,8 @@ import { NotfoundComponent } from './notfound/notfound.component';
 //Auth Services
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { ProfileComponent } from './profile/profile.component';
+import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { AuthGuard } from './services/auth-guard.service';
     FeedbackComponent,
     UsersComponent,
     SignupComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    ProfileComponent,
+    VerifyemailComponent
   ],
   imports: [
     BrowserModule,

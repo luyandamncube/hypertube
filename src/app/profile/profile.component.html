@@ -1,0 +1,41 @@
+<mat-card > 
+  <div class="border">
+    <img class="dp" src="{{user.avatar}}">
+  </div>
+
+  <div class="border">
+    <mat-card-title>{{user.name}}</mat-card-title>
+    <mat-card-subtitle *ngIf="user.verified"> Verified</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!user.verified"> Not Verified</mat-card-subtitle>
+   <a *ngIf="!user.verified" [routerLink]="'/verifyemail'">Re-send verification email</a>
+    <!-- <a [routerLink]="'/verifyemail'">Re-send verification email</a> -->
+  </div>
+<div class="border">
+  <form [formGroup]="profileform">
+    <!--
+    Value:{{profileform.value | json}} 
+    <hr>
+    -->
+    <mat-form-field appearance="standard" style="width:80%;">
+      <mat-label>Update email address</mat-label>
+      <input autocomplete="email" matInput formControlName="email" placeholder="{{user.email}}">
+      
+      <!--
+      <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
+      <mat-error *ngIf="email.invalid && email.value"> Your email does not look right </mat-error>
+      -->
+    </mat-form-field>
+    <a class="links" [routerLink]="profile" ><mat-icon matSuffix>save</mat-icon></a>
+
+    <mat-form-field appearance="standard" style="width:80%;">
+      <mat-label>Update username</mat-label>
+      <input matInput formControlName="name" placeholder="{{user.name}}">
+      <!--
+      <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
+      <mat-error *ngIf="email.invalid && email.value"> Your email does not look right </mat-error>
+      -->
+    </mat-form-field>
+    <a class="links" [routerLink]="profile" ><mat-icon matSuffix>save</mat-icon></a>
+  </form>
+</div>
+</mat-card>

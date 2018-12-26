@@ -8,7 +8,8 @@ import { UsersComponent } from './users/users.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
-
+import { ProfileComponent } from './profile/profile.component';
+import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 //Auth
 import { AuthGuard } from './services/auth-guard.service';
 
@@ -16,9 +17,12 @@ import { AuthGuard } from './services/auth-guard.service';
 const routes: Routes = [
   {path: 'about', canActivate: [AuthGuard], component: AboutComponent},
   {path: 'login', component: LoginComponent},
+  // {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
   {path: 'signup', component: SignupComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
+  // {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
+  {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
   //auxilliary routing
   {
     path: 'home', canActivate: [AuthGuard], component: HomeComponent,
@@ -38,7 +42,11 @@ const routes: Routes = [
         component: FeedbackComponent,
         outlet: 'index',
       },
-
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        outlet: 'index',
+      },
     ]
   },
   //Redirect to 404 page if page error, always put this AFTER ALL routes are defined!

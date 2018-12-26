@@ -18,4 +18,19 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+.dp{
+  height : 40px; 
+  width : 40px; 
+  border-radius : 50px;
+}
+.border{
+  padding: 20px 0px 0px 0px;
+  text-align : center;
+  width : 70%;
+  margin-left: auto; 
+  margin-right: auto;
+}
 
+.links{
+  text-decoration: none;
+}

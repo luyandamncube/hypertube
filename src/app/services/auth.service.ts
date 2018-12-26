@@ -75,6 +75,11 @@ export class AuthService {
   getDisplayPic(){
     return this.userDetails.photoURL;
   }
+  getVerified(){
+    return this.userDetails.emailVerified;
+  }
+
+  //User management
   isLoggedIn() {
   if (this.userDetails == null ) {
       return false;
@@ -82,7 +87,13 @@ export class AuthService {
       return true;
     }
   }
-
+  verifyEmail(){
+    this._firebaseAuth.auth.currentUser.sendEmailVerification().then(function() {
+      // Email sent.
+    }).catch(function(error) {
+      // An error happened.
+    });
+  }
   logout() {
     this._firebaseAuth.auth.signOut()
     .then((res) => this.router.navigate(['login']));
