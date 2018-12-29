@@ -34,7 +34,7 @@ export class VerifyemailComponent implements OnInit {
     sendPasswordReset(){
       this.sent = false;
       this.authService.sendPasswordReset();
-      this.reset_sent = true;
+      // this.reset_sent = true;
     }
 
 
