@@ -30,6 +30,7 @@ export class NavComponent {
   current_username = "";
   current_email = "";
   current_dp= "";
+
   //Constructor injection for Angular Routing Loading Indicator
   loading = false;
   constructor(

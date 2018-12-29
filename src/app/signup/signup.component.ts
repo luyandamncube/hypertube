@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AngularFirestore,  } from '@angular/fire/firestore';
 import { tap, first } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
+import { LoginService } from '../services/login.service';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -10,13 +13,20 @@ import { tap, first } from 'rxjs/operators';
 })
 export class SignupComponent implements OnInit {
   signupform : FormGroup;
-  constructor(private fb : FormBuilder, private afs : AngularFirestore) {}
+  constructor(
+    private fb : FormBuilder, 
+    private afs : AngularFirestore,
+    private authService : AuthService,
+    private loginService : LoginService,
+  ) {}
   //Regex, aplhanumeric characters only
   includes = "[a-zA-Z0-9]*";
   //Asynchronous form states
   loading = false;
   success = false;
-
+  hide = true;
+  private quickloginpass = '';
+  private quickloginemail = '';
   checkPasswords(signupform) { // here we have the 'passwords' group
     let pass = signupform.controls.password.value;
     let confirm = signupform.controls.confirm.value;
@@ -67,11 +77,35 @@ firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(e
   // ...
 });
   */
-
+  createUser(email, password){
+    this.authService.createAccount(email, password);
+    this.quickloginemail = email  ;
+    this.quickloginpass= password  ;
+  }
+  signInWithEmail(){
+    this.loginService.signInWithEmail(this.quickloginemail, this.quickloginpass); 
+  }
   async submitHandler(){
     this.loading = true;
 
     var formValue = this.signupform.value;
+
+    /*
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    */
+    try{
+      console.log();
+      this.createUser(formValue.email, formValue.password);
+      this.success = true;
+    }catch(err){
+      console.log(err);
+    }
+    /*
     try{
       await this.afs.collection('users').add(formValue);
       console.log(formValue);
@@ -79,6 +113,7 @@ firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(e
     }catch(err){
       console.log(err);
     }
+    */
   }
 
 

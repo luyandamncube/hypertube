@@ -20,7 +20,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .dp{
   height : 40px; 
-  width : 40px; 
+  // width : 40px; 
   border-radius : 50px;
 }
 .border{
@@ -33,4 +33,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .links{
   text-decoration: none;
+}
+ 
+.google_btn{
+  background-color: #DE5233;
+  color: white;
+  width: 100%;
+}
+.fb_btn{
+  background-color: #4267b2;
+  color: white;
+  width: 100%;
+}
+.fortytwo_btn{
+  background-color: grey;
+  color: white;
+  width: 100%;
 }

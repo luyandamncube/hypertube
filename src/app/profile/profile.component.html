@@ -1,6 +1,7 @@
 <mat-card > 
   <div class="border">
-    <img class="dp" src="{{user.avatar}}">
+    <img class="dp" *ngIf="user.avatar" src="{{user.avatar}}">
+    <img class="dp" *ngIf="!user.avatar" src="../assets/04.png">
   </div>
 
   <div class="border">

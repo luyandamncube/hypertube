@@ -1,13 +1,40 @@
 <mat-card > 
 
-<div *ngIf = "!sent" class="border">
+<div *ngIf = "!sent && !reset _sent" class="border">
   <mat-card-title>Verify email address</mat-card-title>
   <mat-card-subtitle> To continue, please verify your email address</mat-card-subtitle>
-  <button mat-flat-button style="background-color: LightGray; " (click)="verifyEmail()" >Send Verification Email </button>
+  <button mat-flat-button style="background-color: LightGray; " (click)="verifyEmail()"> Send Verification Email </button>
 </div>
 
 <div *ngIf = "sent" class="border">
   <mat-card-title>Verification email sent!</mat-card-title>
-  <mat-card-subtitle> A verification email was sent to {{emailaddress}}</mat-card-subtitle>
+  <mat-card-subtitle> {{message}} {{emailaddress}}</mat-card-subtitle>
+  <button  mat-stroked-button [routerLink]="'/login'">
+      Continue to login
+      <img style= "height : 20px;" src="assets/01.png"> 
+  </button>
+<!--
+    <button  *ngIf = "loginmethod == 'facebook.com'" mat-stroked-button class="fb_btn"(click)="signInWithFacebook()">
+      Continue with 
+      <img style= "height : 20px;" src="assets/01.png"> 
+    </button>
+
+    <button *ngIf = "loginmethod == 'google.com'" mat-stroked-button class="google_btn"(click)="signInWithGoogle()">
+          Continue with
+     <img style= "height : 15px;" src="assets/02.png">
+    </button>
+
+    <button *ngIf = "loginmethod == 'email'" mat-stroked-button color="primary" class="fortytwo_btn"  (click)="signInWith42()">
+      Continue with
+      <img style= "height : 15px;" src="assets/03.png"> 
+    </button>
+
+    -->
 </div>
-</mat-card>
+<!--
+<div *ngIf = "reset_sent" class="border">
+  <mat-card-title>Password reset!</mat-card-title>
+  <mat-card-subtitle> Password reset instructions were sent to {{emailaddress}}</mat-card-subtitle>
+  <button mat-flat-button style="background-color: LightGray; " [routerLink]="'/login'" >Login </button>
+</div>
+-->

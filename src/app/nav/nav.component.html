@@ -68,9 +68,9 @@
       <div class="topnav">
           <!-- Add Navbar Content Here -->
 
-       
         <a style="height: 100%; float: right; align-items: bottom;" >
-        <img [matMenuTriggerFor]="menu"class="dp" src="{{current_dp}}">
+          <img [matMenuTriggerFor]="menu"class="dp" *ngIf="current_dp" src="{{current_dp}}">
+          <img [matMenuTriggerFor]="menu" class="dp" *ngIf="!current_dp" src="../assets/04.png">
         </a>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>Language</button>

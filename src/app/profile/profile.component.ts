@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
     avatar: this.authService.getDisplayPic(),
     email:  this.authService.getEmail(),
     password: '',
-    verified: this.authService.getVerified(),
+    verified: this.authService.isVerified(),
   };
   constructor(
     private fb : FormBuilder,

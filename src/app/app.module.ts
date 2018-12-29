@@ -42,8 +42,10 @@ import { NotfoundComponent } from './notfound/notfound.component';
 //Auth Services
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
+import { LoginService } from './services/login.service';
 import { ProfileComponent } from './profile/profile.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
+import { SetpassComponent } from './setpass/setpass.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { VerifyemailComponent } from './verifyemail/verifyemail.component';
     SignupComponent,
     NotfoundComponent,
     ProfileComponent,
-    VerifyemailComponent
+    VerifyemailComponent,
+    SetpassComponent
   ],
   imports: [
     BrowserModule,
@@ -76,13 +79,12 @@ import { VerifyemailComponent } from './verifyemail/verifyemail.component';
     MatButtonToggleModule,
     //Forms
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase), 
     //Auth
-    AngularFireModule.initializeApp(environment.firebase, 'angular-auth-firebase'),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AngularFirestore, AuthService, AuthGuard],
+  providers: [AngularFirestore, AuthService, AuthGuard, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

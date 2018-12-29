@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ProfileComponent } from './profile/profile.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
+import { SetpassComponent } from './setpass/setpass.component';
 //Auth
 import { AuthGuard } from './services/auth-guard.service';
 
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
   // {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
   {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
+  {path: 'setpass',  canActivate: [AuthGuard], component: SetpassComponent},
   //auxilliary routing
   {
     path: 'home', canActivate: [AuthGuard], component: HomeComponent,
