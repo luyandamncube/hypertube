@@ -7,25 +7,15 @@
     <mat-nav-list>
       <!-- <a mat-list-item [routerLink]="'/'">Home</a> -->
     <mat-accordion>
-
+      <a mat-list-item [routerLink]="'/'"> Movies</a>
+      <a mat-list-item [routerLink]="'/'"> Series</a>
+      
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-         <mat-panel-title> Movies </mat-panel-title>
+         <mat-panel-title> My Shows </mat-panel-title>
         </mat-expansion-panel-header>
-        <a mat-list-item [routerLink]="'/'">Discover</a>
-        <a mat-list-item [routerLink]="'/'">Popular</a>
-        <a mat-list-item [routerLink]="'/'">Top Rated</a>
-        <a mat-list-item [routerLink]="'/'">My favorites</a>
-      </mat-expansion-panel>
-
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-         <mat-panel-title> Series </mat-panel-title>
-        </mat-expansion-panel-header>
-        <a mat-list-item [routerLink]="'/'">Discover</a>
-        <a mat-list-item [routerLink]="'/'">Popular</a>
-        <a mat-list-item [routerLink]="'/'">Top Rated</a>
-        <a mat-list-item [routerLink]="'/'">My favorites</a>
+        <a mat-list-item [routerLink]="'/'">Favourites</a>
+        <a mat-list-item [routerLink]="'/'">History</a>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -62,13 +52,18 @@
         (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      
-      
-      <div class="topnav">
+      </button>         
           <!-- Add Navbar Content Here -->
+        <mat-form-field>
+          <select matNativeControl required>
+          <option value="volvo">Discover</option>
+          <option value="saab">Popular</option>
+          <option value="mercedes">Top Rated</option>
+        </select>
+        </mat-form-field>
 
-        <a style="height: 100%; float: right; align-items: bottom;" >
+        <div class="spacer"></div>
+        <a style="float: right;" >
           <img [matMenuTriggerFor]="menu"class="dp" *ngIf="current_dp" src="{{current_dp}}">
           <img [matMenuTriggerFor]="menu" class="dp" *ngIf="!current_dp" src="../assets/04.png">
         </a>
@@ -76,7 +71,7 @@
           <button mat-menu-item>Language</button>
           <button mat-menu-item (click)="logout()">Sign Out</button>
         </mat-menu>
-      </div>
+      
     </mat-toolbar>
     <mat-progress-bar
       *ngIf="loading" color="accent" mode="indeterminate">

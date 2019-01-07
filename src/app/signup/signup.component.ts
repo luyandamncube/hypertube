@@ -13,6 +13,7 @@ import { LoginService } from '../services/login.service';
 })
 export class SignupComponent implements OnInit {
   signupform : FormGroup;
+  changepass = false;
   constructor(
     private fb : FormBuilder, 
     private afs : AngularFirestore,
@@ -78,9 +79,12 @@ firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(e
 });
   */
   createUser(email, password){
-    this.authService.createAccount(email, password);
-    this.quickloginemail = email  ;
-    this.quickloginpass= password  ;
+    var error = this.authService.createAccount(email, password );
+    if (error != null){
+      console.log(error);
+    }
+    // this.quickloginemail = email  ;
+    // this.quickloginpass= password  ;
   }
   signInWithEmail(){
     this.loginService.signInWithEmail(this.quickloginemail, this.quickloginpass); 

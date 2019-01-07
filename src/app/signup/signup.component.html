@@ -4,7 +4,7 @@
     <h1>Create account</h1>
     <div style="margin-left: auto; margin-right: auto; text-align : center;" *ngIf="success">
       <p> Congratulations! your hypetube account has been created.</p>
-       <button style="background-color: LightGray;" (click)="signInWithEmail()" color="primary" mat-button>Sign in</button>
+       <button style="background-color: LightGray;" routerLink="../login" color="primary" mat-button>Sign in</button>
       <!-- <button mat-flat-button style="background-color: LightGray;" routerLink="../login" >Login</button> -->
     </div>
 </div>
@@ -43,9 +43,9 @@
     <mat-form-field appearance="outline" style="width:80%;">
     <mat-label>Confirm</mat-label>
     <input matInput type="confirm" matInput type="password" formControlName="confirm" placeholder="Confirm password">
-        <!-- <mat-error *ngIf="signupform.hasError('notSame')"> Passwords do not match </mat-error> -->
-         <mat-error *ngIf="password.value == ''"> Please confirm password </mat-error>
-         <mat-error *ngIf="signupform.controls.confirm.errors?.checkPasswords && password.value"> Passwords do not match </mat-error>
+        <mat-error *ngIf="signupform.hasError('notSame')"> Passwords do not match </mat-error> 
+         <mat-error *ngIf="confirm.value == ''"> Please confirm password </mat-error>
+         <mat-error *ngIf="signupform.controls.confirm.errors?.checkPasswords && confirm.value"> Passwords do not match </mat-error>
   </mat-form-field>
   <div style="margin-left: auto; margin-right: auto; width :80%">
     <button mat-flat-button style=" float:left" routerLink="../login" >Login</button>    

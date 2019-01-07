@@ -18,11 +18,9 @@ import { AuthGuard } from './services/auth-guard.service';
 const routes: Routes = [
   {path: 'about', canActivate: [AuthGuard], component: AboutComponent},
   {path: 'login', component: LoginComponent},
-  // {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
   {path: 'signup', component: SignupComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
-  // {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
   {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
   {path: 'setpass',  canActivate: [AuthGuard], component: SetpassComponent},
   //auxilliary routing
