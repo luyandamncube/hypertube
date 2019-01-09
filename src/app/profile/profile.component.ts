@@ -60,7 +60,10 @@ export class ProfileComponent implements OnInit {
     this.profileform.setValue({name: this.user.name, email: this.user.email, avatar: this.user.avatar, password: '', confirm :'' });
   }
   changepass(){
-    this.changedpass = true;
+    if(this.changedpass = false)
+      this.changedpass = true;
+    else
+      this.changedpass = false;
   }
 
   get email(){

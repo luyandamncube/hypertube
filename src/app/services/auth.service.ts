@@ -2,8 +2,10 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from "@angular/router";
 
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore,  } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
+import { yearsPerPage } from '@angular/material/datepicker/typings/multi-year-view';
 // import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable({
@@ -14,10 +16,11 @@ export class AuthService {
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   // private userauth =  firebase.auth().currentUser;
-  
+  public userloggedin = null;
   loginmethod = '';
   constructor(
     private _firebaseAuth: AngularFireAuth, 
+    private afs : AngularFirestore,
     private router: Router,
     private ngZone: NgZone,
     // private fba : firebase,
@@ -31,6 +34,8 @@ export class AuthService {
       (user) => {
       if (user) {
         this.userDetails = user;
+        this.userloggedin = this.afs.collection("users").doc(user.uid).get();
+        
         //Do something with user info. For testing 
         // console.log(this.userDetails.providerData[0].providerId);
         // console.log(this.userDetails.providerData[0].email);
@@ -44,21 +49,48 @@ export class AuthService {
     /* MAKE PRIVATE AFTER TESTING */
   }
 
+  
+  //Adds entry to 'users' collection
+  addDocument(docname,username, email, avatar,verified,favourites,history){
+        console.log("user ID found: "+ docname);
+        // Add a new user account in collections
+        this.afs.collection("users").doc(docname).set({
+          username: username,
+          email: email,
+          avatar: avatar,
+          verified: verified,
+          newuser: 'yes',
+          favourites: favourites,
+          history: history,
+      })
+      .then(function() {
+          console.log("User account created!");
+      })
+      .catch(function(error) {
+          console.error("Error creating user account: ", error);
+      });
+  }
   createAccount(email, password){
     this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
-      var errorCode = error.code;
+      // var errorCode = error.code;
       var errorMessage = error.message;
       console.log("Error creating account:", errorMessage)
       // ...
+      return false;
     });
+      return true;
   }
   signInWith42(){
     // console.log("testing");
     window.alert("Need to link the API")
+    /*
+    */
   }
   signInWithFacebook() {
-
+    console.log(this.userloggedin);
+    var zone = this.ngZone;
+    var route = this.router;
     var auth = firebase.auth();
     var user = firebase.auth().currentUser;
     this.loginmethod = 'facebook.com';
@@ -66,7 +98,16 @@ export class AuthService {
     return auth.signInWithPopup(
           new firebase.auth.FacebookAuthProvider()
     ).then(function(result) {
+      if(result.additionalUserInfo.isNewUser){
+        zone.run(() => route.navigate(['setpass']));
+        console.log("existing user")
+      }else{
+        console.log("new user");
+        
+        // this.authService.addDocument(user.displayName, user.email, '', 'false', '', '');
+      }
     }).catch(function(error) {
+      
       // Handle errors here
       if (error.code === 'auth/account-exists-with-different-credential') {
         // Step 2.
@@ -133,12 +174,17 @@ export class AuthService {
     return this._firebaseAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
     ).then(function(result) {
+      /*
       if(result.additionalUserInfo.isNewUser){
         zone.run(() => route.navigate(['setpass']));
         console.log("existing user")
       }else{
-        console.log("new user")
+        console.log("new user");
+
+
+        // this.authService.addDocument(formValue.username, formValue.email, '', 'false', '', '');
       }
+              */
     }).catch(function(error) {
       // Handle Errors here.
         console.log("Error signing in with Google:", error.message);
@@ -159,12 +205,16 @@ export class AuthService {
 
   signInRegular(email, password) {
     this.loginmethod = 'email';
+    console.log(this.userloggedin);
     const credential = firebase.auth.EmailAuthProvider.credential( email, password );
-    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password)
+    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
   }
   //Get methods for user info
   getUsername(){
     return this.userDetails.displayName;
+  }
+  getUserID(){
+    return this.userDetails.uid
   }
   getEmail(){
     return this.userDetails.email;

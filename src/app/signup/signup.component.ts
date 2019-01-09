@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //Use these to build forms
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AngularFirestore,  } from '@angular/fire/firestore';
+// import { AngularFirestore,  } from '@angular/fire/firestore';
 import { tap, first } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { LoginService } from '../services/login.service';
@@ -16,7 +16,7 @@ export class SignupComponent implements OnInit {
   changepass = false;
   constructor(
     private fb : FormBuilder, 
-    private afs : AngularFirestore,
+    // private afs : AngularFirestore,
     private authService : AuthService,
     private loginService : LoginService,
   ) {}
@@ -70,21 +70,18 @@ export class SignupComponent implements OnInit {
   get confirm(){
     return this.signupform.get('confirm');
   }
-  /*
-firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // ...
-});
-  */
+
   createUser(email, password){
-    var error = this.authService.createAccount(email, password );
-    if (error != null){
+    this.quickloginemail = email;
+    this.quickloginpass = password;
+    var error = this.authService.createAccount(this.quickloginemail , this.quickloginpass );
+    if (error == false){
       console.log(error);
+      return (false);
+    }else{
+      return(true);
+
     }
-    // this.quickloginemail = email  ;
-    // this.quickloginpass= password  ;
   }
   signInWithEmail(){
     this.loginService.signInWithEmail(this.quickloginemail, this.quickloginpass); 
@@ -94,20 +91,38 @@ firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(e
 
     var formValue = this.signupform.value;
 
-    /*
-      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-      });
-    */
     try{
-      console.log();
-      this.createUser(formValue.email, formValue.password);
-      this.success = true;
+      console.log("Entered user signup...");
+      var error = this.createUser(formValue.email, formValue.password);
+      if (error == true){
+        this.success = true;
+      var currentuser;
+      //Quick login user
+      this.authService.signInRegular(formValue.email, formValue.password).then((res) => {
+        // console.log(this.authService.loginmethod);
+        // this.ngZone.run(() => this.router.navigate(['verifyemail']));
+        currentuser = this.authService.getUserID();
+        this.authService.addDocument(currentuser,formValue.username, formValue.email, '', 'false', '', '');
+        console.log("user logged in: "+ currentuser);
+      })
+      .catch(
+        function(err){
+          console.log("Error: " + err.message);
+        }
+      );
+
+        //log user in : FUTURE WORK
+      /*
+        this.signInWithEmail();
+        console.log("pass: "+this.quickloginpass);
+        console.log("email: "+this.email)
+        */
+      }
+      
+
     }catch(err){
       console.log(err);
+      this.success = false;
     }
     /*
     try{

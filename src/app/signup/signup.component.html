@@ -4,7 +4,7 @@
     <h1>Create account</h1>
     <div style="margin-left: auto; margin-right: auto; text-align : center;" *ngIf="success">
       <p> Congratulations! your hypetube account has been created.</p>
-       <button style="background-color: LightGray;" routerLink="../login" color="primary" mat-button>Sign in</button>
+       <button style="background-color: LightGray;" routerLink="/home" color="primary" mat-button>Go to my account</button>
       <!-- <button mat-flat-button style="background-color: LightGray;" routerLink="../login" >Login</button> -->
     </div>
 </div>
@@ -49,7 +49,7 @@
   </mat-form-field>
   <div style="margin-left: auto; margin-right: auto; width :80%">
     <button mat-flat-button style=" float:left" routerLink="../login" >Login</button>    
-    <button [disabled]="!signupform.valid" (click)="createUser(email.value,password.value)" style="background-color: LightGray; float:right" mat-button>Sign up</button>
+    <button [disabled]="!signupform.valid" style="background-color: LightGray; float:right" mat-button>Sign up</button>
   </div>
     <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
 </form>

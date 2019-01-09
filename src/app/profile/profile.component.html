@@ -18,27 +18,26 @@
     <hr>
     -->
    
-    <mat-form-field appearance="standard" style="width:80%;">
+    <mat-form-field appearance="standard" style="width:100%;">
       <mat-label>Update email address</mat-label>
       <input autocomplete="email" matInput formControlName="email" placeholder="Email">
       <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
       <mat-error *ngIf="email.invalid && email.value"> Your email does not look right </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="standard" style="width:80%;">
+    <mat-form-field appearance="standard" style="width:100%;">
       <mat-label>Update username</mat-label>
       <input matInput formControlName="name" placeholder="Username">
       <mat-error *ngIf="name.value == ''"> Please enter username </mat-error>
       <mat-error *ngIf="name.invalid && email.value"> Your username does not look right </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button (click)="changepass()">Change Password</button>
-
-    <div style="margin-left: auto; margin-right: auto; padding : 10px 0px 0px 0px;width :80%">
+    <div style="margin-left: auto; margin-right: auto; padding : 0px 0px 0px 0px;width :80%">
       <button mat-flat-button (click)="resetform()" style="float:left">Reset</button>
       <button [disabled]="!profileform.valid" color="primary" style="background-color: lightgrey; float:right" mat-button>Update</button>
     </div>
-
+    <br>
+    <button mat-raised-button (click)="changepass()">Change Password</button>
 
     <div *ngIf= "changedpass" >
       <mat-form-field appearance="standard" style="width:80%;">
