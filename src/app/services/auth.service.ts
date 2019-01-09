@@ -205,7 +205,7 @@ export class AuthService {
 
   signInRegular(email, password) {
     this.loginmethod = 'email';
-    console.log(this.userloggedin);
+    console.log(this.userloggedin.data.data());
     const credential = firebase.auth.EmailAuthProvider.credential( email, password );
     return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
   }
