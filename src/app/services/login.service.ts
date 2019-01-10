@@ -20,6 +20,7 @@ export class LoginService {
     .then((res) => {
       // if (!this.loggedin)
       console.log(this.authService.loginmethod);
+      this.authService.getUserDocument();
       this.ngZone.run(() => this.router.navigate(['setpass']));
           
       })
@@ -29,18 +30,21 @@ export class LoginService {
     this.authService.signInWithGoogle()
     .then((res) => {
       console.log(this.authService.loginmethod);
+      this.authService.getUserDocument();
       this.ngZone.run(() => this.router.navigate(['setpass']));
       })
     .catch((err) => console.log(err));
   }
   signInWith42(){
     this.authService.signInWith42();
+    this.authService.getUserDocument();
     // this.ngZone.run(() => this.router.navigate(['home']));
   }
   signInWithEmail(email, pass) {
      this.authService.signInRegular(email, pass)
       .then((res) => {
         console.log(this.authService.loginmethod);
+       this.authService.getUserDocument();
         this.ngZone.run(() => this.router.navigate(['verifyemail']));
       })
       .catch(

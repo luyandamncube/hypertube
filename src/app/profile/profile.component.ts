@@ -19,9 +19,9 @@ export class ProfileComponent implements OnInit {
   return notSame ;         
   }
   user = {
-    name: this.authService.getUsername(),
-    avatar: this.authService.getDisplayPic(),
-    email:  this.authService.getEmail(),
+    name: this.authService.username,
+    avatar: this.authService.avatar,
+    email:  this.authService.email,
     password: '',
     verified: this.authService.isVerified(),
   };

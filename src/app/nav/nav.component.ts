@@ -41,6 +41,7 @@ export class NavComponent {
 
   ){
 
+    /*
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
@@ -59,10 +60,12 @@ export class NavComponent {
         }
       }
     });
+    */
     if (authService.isLoggedIn()){
-      this.current_username = authService.getUsername();
-      this.current_email = authService.getEmail();
-      this.current_dp = authService.getDisplayPic();
+     
+      this.current_username = authService.username;
+      this.current_email = authService.email;
+      this.current_dp = authService.avatar;
     }
 
 

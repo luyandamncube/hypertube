@@ -1,55 +1,101 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from "@angular/router";
-
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore,  } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { yearsPerPage } from '@angular/material/datepicker/typings/multi-year-view';
-// import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  //Create an observable user variable
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
-  // private userauth =  firebase.auth().currentUser;
   public userloggedin = null;
+  public userDocument = null;
+
+  db = firebase.firestore();
+  colelction  = this.db.collection("users");
   loginmethod = '';
+  //User info from Observable
+  uid: string;
+	profilePhoto: string;
+	displayName: string;
+  providerId: string;
+  
+  //User info from db
+  avatar= null;   
+  email= null;    
+  favourites= null;  
+  history= null;  
+  newuser= null;  
+  username= null;  
+  verified= null;  
+
   constructor(
     private _firebaseAuth: AngularFireAuth, 
     private afs : AngularFirestore,
     private router: Router,
     private ngZone: NgZone,
     // private fba : firebase,
-    ) { 
+  ) { 
     this.user = _firebaseAuth.authState;
-    /*
-      Creates a user observable. Provides us with information about the 
-      user who is logging in(e.g. email, provider etc)
-    */
     this.user.subscribe(
       (user) => {
       if (user) {
-        this.userDetails = user;
-        this.userloggedin = this.afs.collection("users").doc(user.uid).get();
         
-        //Do something with user info. For testing 
-        // console.log(this.userDetails.providerData[0].providerId);
-        // console.log(this.userDetails.providerData[0].email);
-        // console.log(this.userDetails);
+        this.userDetails = user;
+        // console.log(user);
+        this.uid = this.userDetails.uid;
+        // console.log(this.uid);
+        this.profilePhoto= this.userDetails.photoURL;
+        // console.log(this.profilePhoto);
+        this.displayName = this.userDetails.displayName;
+        // console.log(this.displayName);
+        this.providerId= this.userDetails.providerId;
+        // console.log( this.providerId);
       }
       else {
         this.userDetails = null;
       }
       }
     );
-    /* MAKE PRIVATE AFTER TESTING */
   }
 
-  
+  getUserDocument(){
+    // console.log(this.uid);
+    var userdoc, avatar, email, favourites, history, newuser, username, verified ;
+    this.userloggedin = this.db.collection("users").doc(this.uid);
+    this.userloggedin.get().then(function(doc) {
+      if (doc.exists) {
+        userdoc = doc.data();
+        console.log("Document data:", userdoc);
+        // return userdoc;
+        // console.log(this.userDocument);
+        // avatar = userdoc['avatar'];
+        // email = userdoc.email;
+        // favourites = userdoc.favourites;
+        // history = userdoc.history;
+        // newuser = userdoc.newuser;
+        // username = userdoc.username;
+        // verified = userdoc.verified;
+      } else {
+          console.log("No such document!");
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
+    // console.log(this.userDocument);
+    // this.avatar = this.userDocument.avatar; console.log(this.avatar);
+    // this.email = this.userDocument.email;console.log(this.email);
+    // this.favourites = this.userDocument.favourites;console.log(this.favourites);
+    // this.history = this.userDocument.history;console.log(this.history);
+    // this.newuser = this.userDocument.newuser;console.log(this.newuser);
+    // this.username = this.userDocument.username;console.log(this.username);
+    // this.verified = this.userDocument.verified;console.log(this.verified);
+  }
   //Adds entry to 'users' collection
   addDocument(docname,username, email, avatar,verified,favourites,history){
         console.log("user ID found: "+ docname);
@@ -70,41 +116,38 @@ export class AuthService {
           console.error("Error creating user account: ", error);
       });
   }
+
   createAccount(email, password){
     this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      // var errorCode = error.code;
       var errorMessage = error.message;
       console.log("Error creating account:", errorMessage)
-      // ...
       return false;
     });
       return true;
   }
+
   signInWith42(){
-    // console.log("testing");
+    // this.getUserDocument();
     window.alert("Need to link the API")
-    /*
-    */
   }
+
   signInWithFacebook() {
-    console.log(this.userloggedin);
+    // this.getUserDocument();
     var zone = this.ngZone;
     var route = this.router;
     var auth = firebase.auth();
     var user = firebase.auth().currentUser;
+    
     this.loginmethod = 'facebook.com';
-      // return this._firebaseAuth.auth.signInWithPopup(
     return auth.signInWithPopup(
           new firebase.auth.FacebookAuthProvider()
     ).then(function(result) {
+      
       if(result.additionalUserInfo.isNewUser){
         zone.run(() => route.navigate(['setpass']));
         console.log("existing user")
       }else{
         console.log("new user");
-        
-        // this.authService.addDocument(user.displayName, user.email, '', 'false', '', '');
       }
     }).catch(function(error) {
       
@@ -165,28 +208,18 @@ export class AuthService {
       });
   }
 });
+
 }
 
   signInWithGoogle() {
+    // this.getUserDocument();
     this.loginmethod = 'google.com';
     var zone = this.ngZone;
     var route = this.router;
     return this._firebaseAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
     ).then(function(result) {
-      /*
-      if(result.additionalUserInfo.isNewUser){
-        zone.run(() => route.navigate(['setpass']));
-        console.log("existing user")
-      }else{
-        console.log("new user");
-
-
-        // this.authService.addDocument(formValue.username, formValue.email, '', 'false', '', '');
-      }
-              */
     }).catch(function(error) {
-      // Handle Errors here.
         console.log("Error signing in with Google:", error.message);
     });
   }
@@ -204,9 +237,8 @@ export class AuthService {
   // }
 
   signInRegular(email, password) {
+    // this.getUserDocument();
     this.loginmethod = 'email';
-    console.log(this.userloggedin.data.data());
-    const credential = firebase.auth.EmailAuthProvider.credential( email, password );
     return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
   }
   //Get methods for user info
@@ -256,10 +288,8 @@ export class AuthService {
   }
   setPassword(newPassword){
     this._firebaseAuth.auth.currentUser.updatePassword(newPassword).then(function(){
-      
-      // Update successful.
       }).catch(function(error) {
-        // An error happened.
+
       });
 
   }
