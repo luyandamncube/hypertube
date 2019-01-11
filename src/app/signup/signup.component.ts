@@ -80,7 +80,6 @@ export class SignupComponent implements OnInit {
       return (false);
     }else{
       return(true);
-
     }
   }
   signInWithEmail(){
@@ -102,7 +101,7 @@ export class SignupComponent implements OnInit {
         // console.log(this.authService.loginmethod);
         // this.ngZone.run(() => this.router.navigate(['verifyemail']));
         currentuser = this.authService.getUserID();
-        this.authService.addDocument(currentuser,formValue.username, formValue.email, '', 'false', '', '');
+        this.authService.addDocument(currentuser,formValue.username, formValue.email, '', 'false','true', '', '');
         console.log("user logged in: "+ currentuser);
       })
       .catch(

@@ -19,8 +19,12 @@ export class LoginService {
     this.authService.signInWithFacebook()
     .then((res) => {
       // if (!this.loggedin)
-      console.log(this.authService.loginmethod);
+      // console.log(this.authService.loginmethod);
       this.authService.getUserDocument();
+      // this.authService.updateAvatar("newboi.com");
+      if (this.authService.newuser == 'true'){
+        // this.authService.avatar = 
+      }
       this.ngZone.run(() => this.router.navigate(['setpass']));
           
       })
@@ -29,7 +33,7 @@ export class LoginService {
   signInWithGoogle() {
     this.authService.signInWithGoogle()
     .then((res) => {
-      console.log(this.authService.loginmethod);
+      // console.log(this.authService.loginmethod);
       this.authService.getUserDocument();
       this.ngZone.run(() => this.router.navigate(['setpass']));
       })
@@ -43,7 +47,7 @@ export class LoginService {
   signInWithEmail(email, pass) {
      this.authService.signInRegular(email, pass)
       .then((res) => {
-        console.log(this.authService.loginmethod);
+        // console.log(this.authService.loginmethod);
        this.authService.getUserDocument();
         this.ngZone.run(() => this.router.navigate(['verifyemail']));
       })

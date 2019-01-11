@@ -29,7 +29,7 @@ export class NavComponent {
     );
   current_username = "";
   current_email = "";
-  current_dp= "";
+  current_dp = "";
 
   //Constructor injection for Angular Routing Loading Indicator
   loading = false;
@@ -61,16 +61,19 @@ export class NavComponent {
       }
     });
     */
-    if (authService.isLoggedIn()){
-     
-      this.current_username = authService.username;
-      this.current_email = authService.email;
-      this.current_dp = authService.avatar;
-    }
-
-
   }
   
+  ngOnInit(){
+    //New user setup
+
+      if (this.authService.isLoggedIn()){
+     
+        this.current_username = this.authService.username; //console.log(this.current_username);
+        this.current_email = this.authService.email;//console.log(this.current_email);
+        this.current_dp = this.authService.avatar;//console.log(this.current_dp);
+      }
+  }
+
   logout() {
     this.authService.logout();
     this.ngZone.run(() => this.router.navigate(['/']));

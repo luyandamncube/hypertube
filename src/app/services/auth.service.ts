@@ -14,19 +14,20 @@ export class AuthService {
   private user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   public userloggedin = null;
-  public userDocument = null;
+  // public userDocument = null;
 
   db = firebase.firestore();
-  colelction  = this.db.collection("users");
+  // colelction  = this.db.collection("users");
   loginmethod = '';
   //User info from Observable
   uid: string;
 	profilePhoto: string;
 	displayName: string;
   providerId: string;
+  displayEmail : string;
   
   //User info from db
-  avatar= null;   
+  avatar: string = '';   
   email= null;    
   favourites= null;  
   history= null;  
@@ -50,12 +51,13 @@ export class AuthService {
         // console.log(user);
         this.uid = this.userDetails.uid;
         // console.log(this.uid);
-        this.profilePhoto= this.userDetails.photoURL;
+        this.profilePhoto = this.userDetails.photoURL;
         // console.log(this.profilePhoto);
         this.displayName = this.userDetails.displayName;
         // console.log(this.displayName);
-        this.providerId= this.userDetails.providerId;
+        this.providerId = this.userDetails.providerId;
         // console.log( this.providerId);
+        this.displayEmail = this.userDetails.email;
       }
       else {
         this.userDetails = null;
@@ -64,48 +66,55 @@ export class AuthService {
     );
   }
 
+  
+  // Use fat arrow for linked functions, able to access class methods inside
   getUserDocument(){
     // console.log(this.uid);
-    var userdoc, avatar, email, favourites, history, newuser, username, verified ;
-    this.userloggedin = this.db.collection("users").doc(this.uid);
-    this.userloggedin.get().then(function(doc) {
+    var userdoc, tempav, tempus, tempne;
+    this.userloggedin = this.getLoggedIn();
+    this.userloggedin.get().then((doc) => {
       if (doc.exists) {
         userdoc = doc.data();
-        console.log("Document data:", userdoc);
-        // return userdoc;
-        // console.log(this.userDocument);
-        // avatar = userdoc['avatar'];
-        // email = userdoc.email;
-        // favourites = userdoc.favourites;
-        // history = userdoc.history;
-        // newuser = userdoc.newuser;
-        // username = userdoc.username;
-        // verified = userdoc.verified;
+
+        if (userdoc.newuser  == '' || userdoc.newuser == 'true'){
+          // console.log("New user");
+          tempav = this.profilePhoto;
+          tempus = this.displayName;
+          tempne = 'false';
+          this.updateAvatar(tempav);
+          this.updateUsername(tempus);
+          this.updateNewuser(tempne);
+        }else{
+          tempav = userdoc.avatar;
+          tempus = userdoc.username;
+          tempne = userdoc.newuser;
+        }
+        this.avatar = tempav;
+        this.email = userdoc.email;
+        this.favourites = userdoc.favourites;
+        this.history = userdoc.history;
+        this.newuser = tempne;
+        this.username = tempus;
+        this.verified = userdoc.verified;
       } else {
           console.log("No such document!");
+          //addDocument(docname,username, email, avatar,verified,newuser,favourites,history)
+          this.addDocument(this.uid,'',this.displayEmail, this.profilePhoto, 'false', 'false','','');
       }
   }).catch(function(error) {
       console.log("Error getting document:", error);
   });
-    // console.log(this.userDocument);
-    // this.avatar = this.userDocument.avatar; console.log(this.avatar);
-    // this.email = this.userDocument.email;console.log(this.email);
-    // this.favourites = this.userDocument.favourites;console.log(this.favourites);
-    // this.history = this.userDocument.history;console.log(this.history);
-    // this.newuser = this.userDocument.newuser;console.log(this.newuser);
-    // this.username = this.userDocument.username;console.log(this.username);
-    // this.verified = this.userDocument.verified;console.log(this.verified);
   }
   //Adds entry to 'users' collection
-  addDocument(docname,username, email, avatar,verified,favourites,history){
+  addDocument(docname,username, email, avatar,verified,newuser,favourites,history){
         console.log("user ID found: "+ docname);
         // Add a new user account in collections
-        this.afs.collection("users").doc(docname).set({
+        this.db.collection("users").doc(docname).set({
           username: username,
           email: email,
           avatar: avatar,
           verified: verified,
-          newuser: 'yes',
+          newuser: newuser,
           favourites: favourites,
           history: history,
       })
@@ -143,12 +152,12 @@ export class AuthService {
           new firebase.auth.FacebookAuthProvider()
     ).then(function(result) {
       
-      if(result.additionalUserInfo.isNewUser){
-        zone.run(() => route.navigate(['setpass']));
-        console.log("existing user")
-      }else{
-        console.log("new user");
-      }
+      // if(result.additionalUserInfo.isNewUser){
+      //   zone.run(() => route.navigate(['setpass']));
+      //   console.log("existing user")
+      // }else{
+      //   console.log("new user");
+      // }
     }).catch(function(error) {
       
       // Handle errors here
@@ -241,6 +250,9 @@ export class AuthService {
     this.loginmethod = 'email';
     return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
   }
+  getLoggedIn(){
+    return this.db.collection("users").doc(this.uid);
+  }
   //Get methods for user info
   getUsername(){
     return this.userDetails.displayName;
@@ -297,6 +309,93 @@ export class AuthService {
     this._firebaseAuth.auth.signOut()
     .then((res) => this.router.navigate(['login']));
   }
-
+  //Update methods
+  updateAvatar(info){
+    return this.userloggedin.update({
+      avatar: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+  }
+  updateEmail(info){
+    return this.userloggedin.update({
+      email: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+  }
+  updateFavourites(info){
+    return this.userloggedin.update({
+      favourites: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+  }
+  updateHistory(info){
+    /*
+    return this.userloggedin.update({
+      history: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+    */
+    //apend JSON string?
+  }
+  updateNewuser(info){
+    return this.userloggedin.update({
+      newuser: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+  }
+  updateUsername(info){
+    return this.userloggedin.update({
+      username: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+  }
+  updateVerified(info){
+    return this.userloggedin.update({
+      verified: info
+    })
+    .then(function() {
+      console.log("Document successfully updated!");
+    })
+    .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+    });
+  }
 }
 

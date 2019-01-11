@@ -13,10 +13,10 @@
   </div>
 <div class="border">
   <form [formGroup]="profileform">
-    <!--
+    
     Value:{{profileform.value | json}} 
     <hr>
-    -->
+    
    
     <mat-form-field appearance="standard" style="width:100%;">
       <mat-label>Update email address</mat-label>
@@ -31,14 +31,16 @@
       <mat-error *ngIf="name.value == ''"> Please enter username </mat-error>
       <mat-error *ngIf="name.invalid && email.value"> Your username does not look right </mat-error>
     </mat-form-field>
-
+    <br><br>
     <div style="margin-left: auto; margin-right: auto; padding : 0px 0px 0px 0px;width :80%">
+      
       <button mat-flat-button (click)="resetform()" style="float:left">Reset</button>
       <button [disabled]="!profileform.valid" color="primary" style="background-color: lightgrey; float:right" mat-button>Update</button>
     </div>
     <br>
+    <!--
     <button mat-raised-button (click)="changepass()">Change Password</button>
-
+    
     <div *ngIf= "changedpass" >
       <mat-form-field appearance="standard" style="width:80%;">
         <mat-label>Password</mat-label>
@@ -49,7 +51,7 @@
             <mat-hint> Must be at least 8 characters long </mat-hint>
       </mat-form-field>
     
-        <mat-form-field appearance="standard" style="width:80%;">
+      <mat-form-field appearance="standard" style="width:80%;">
         <mat-label>Confirm</mat-label>
         <input matInput type="confirm" matInput type="password" formControlName="confirm" placeholder="Confirm password">
             <mat-error *ngIf="signupform.hasError('notSame')"> Passwords do not match </mat-error> 
@@ -58,6 +60,7 @@
       </mat-form-field>
 
     </div>
+    -->
   </form>
 
 

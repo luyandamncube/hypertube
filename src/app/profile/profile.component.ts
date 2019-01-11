@@ -42,10 +42,12 @@ export class ProfileComponent implements OnInit {
       avatar: [this.user.avatar, [
         Validators.required, 
       ]],
+      
       email: [this.user.email , [
         Validators.required, 
         Validators.email,
       ]],
+      /*
       password: ['', [
         Validators.required, 
         Validators.minLength(8),
@@ -54,10 +56,13 @@ export class ProfileComponent implements OnInit {
         Validators.required, 
       
     ]],
-  }, {validators: this.checkPasswords });
+    */
+  });//, {validators: this.checkPasswords });
   }
+  
   resetform(){
-    this.profileform.setValue({name: this.user.name, email: this.user.email, avatar: this.user.avatar, password: '', confirm :'' });
+    // this.profileform.setValue({name: this.user.name, email: this.user.email, avatar: this.user.avatar, password: '', confirm :'' });
+    window.alert("Reset!");
   }
   changepass(){
     if(this.changedpass = false)
