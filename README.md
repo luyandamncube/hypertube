@@ -16,7 +16,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Styled using [Angular Material](https://material.angular.io/).
 
-## Database
+## Database & hosting
 
-Database managment using [Firebase](https://firebase.google.com/).
+Database managment using [Firebase](https://firebase.google.com/). Hosted [here](https://hypertube-16d52.firebaseapp.com/)
 
