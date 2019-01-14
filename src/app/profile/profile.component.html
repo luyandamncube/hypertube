@@ -35,7 +35,7 @@
     <div style="margin-left: auto; margin-right: auto; padding : 0px 0px 0px 0px;width :80%">
       
       <button mat-flat-button (click)="resetform()" style="float:left">Reset</button>
-      <button [disabled]="!profileform.valid" color="primary" style="background-color: lightgrey; float:right" mat-button>Update</button>
+      <button [disabled]="!profileform.valid" (click)="update()"  color="primary" style="background-color: lightgrey; float:right" mat-button>Update</button>
     </div>
     <br>
     <!--

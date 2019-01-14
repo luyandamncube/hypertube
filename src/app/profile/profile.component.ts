@@ -61,8 +61,13 @@ export class ProfileComponent implements OnInit {
   }
   
   resetform(){
-    // this.profileform.setValue({name: this.user.name, email: this.user.email, avatar: this.user.avatar, password: '', confirm :'' });
-    window.alert("Reset!");
+    this.profileform.setValue({name: this.user.name, email: this.user.email, avatar: this.user.avatar});//, password: '', confirm :'' });
+    // window.alert("Reset!");
+  }
+  update(){
+    // this.authService.updateUsername();
+    // this.authService.updateEmail();
+    // this.authService.updateAvatar();
   }
   changepass(){
     if(this.changedpass = false)

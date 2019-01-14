@@ -83,7 +83,7 @@ export class SignupComponent implements OnInit {
     }
   }
   signInWithEmail(){
-    this.loginService.signInWithEmail(this.quickloginemail, this.quickloginpass); 
+    this.authService.signInRegular(this.quickloginemail, this.quickloginpass); 
   }
   async submitHandler(){
     this.loading = true;

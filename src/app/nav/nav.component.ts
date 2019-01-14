@@ -23,13 +23,12 @@ import {
 })
 export class NavComponent {
   apptitle = 'Hypertube';
+
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
-  current_username = "";
-  current_email = "";
-  current_dp = "";
 
   //Constructor injection for Angular Routing Loading Indicator
   loading = false;
@@ -61,18 +60,23 @@ export class NavComponent {
       }
     });
     */
+
   }
   
   ngOnInit(){
     //New user setup
+    // if (this.authService.isLoggedIn()){
+    //   this.current_username = this.authService.username; console.log(this.current_username);
+    //   this.current_email = this.authService.email;console.log(this.current_email);
+    //   this.current_dp = this.authService.avatar;console.log(this.current_dp);
+    // }
+    
 
-      if (this.authService.isLoggedIn()){
-     
-        this.current_username = this.authService.username; //console.log(this.current_username);
-        this.current_email = this.authService.email;//console.log(this.current_email);
-        this.current_dp = this.authService.avatar;//console.log(this.current_dp);
-      }
   }
+  
+  current_username = this.authService.username; 
+  current_email = this.authService.email;sx
+  current_dp = this.authService.avatar;
 
   logout() {
     this.authService.logout();

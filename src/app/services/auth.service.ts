@@ -27,13 +27,13 @@ export class AuthService {
   displayEmail : string;
   
   //User info from db
-  avatar: string = '';   
-  email= null;    
-  favourites= null;  
-  history= null;  
-  newuser= null;  
-  username= null;  
-  verified= null;  
+  avatar: string;   
+  email: string;    
+  favourites: string;  
+  history: string;  
+  newuser: string;  
+  username: string;  
+  verified: string;  
 
   constructor(
     private _firebaseAuth: AngularFireAuth, 
@@ -48,9 +48,6 @@ export class AuthService {
       if (user) {
         
         this.userDetails = user;
-        // console.log(user);
-        this.uid = this.userDetails.uid;
-        // console.log(this.uid);
         this.profilePhoto = this.userDetails.photoURL;
         // console.log(this.profilePhoto);
         this.displayName = this.userDetails.displayName;
@@ -64,14 +61,17 @@ export class AuthService {
       }
       }
     );
+    
   }
+  ngOnInit(){
 
+  }
   
   // Use fat arrow for linked functions, able to access class methods inside
-  getUserDocument(){
-    // console.log(this.uid);
+  getUserDocument(uid){
     var userdoc, tempav, tempus, tempne;
-    this.userloggedin = this.getLoggedIn();
+
+    this.userloggedin = this.db.collection("users").doc(uid);
     this.userloggedin.get().then((doc) => {
       if (doc.exists) {
         userdoc = doc.data();
@@ -82,7 +82,7 @@ export class AuthService {
           tempus = this.displayName;
           tempne = 'false';
           this.updateAvatar(tempav);
-          this.updateUsername(tempus);
+          // this.updateUsername(tempus.toLowerCase( ));
           this.updateNewuser(tempne);
         }else{
           tempav = userdoc.avatar;
@@ -96,15 +96,19 @@ export class AuthService {
         this.newuser = tempne;
         this.username = tempus;
         this.verified = userdoc.verified;
+        
       } else {
           console.log("No such document!");
           //addDocument(docname,username, email, avatar,verified,newuser,favourites,history)
-          this.addDocument(this.uid,'',this.displayEmail, this.profilePhoto, 'false', 'false','','');
+          this.addDocument(uid,'',this.displayEmail, this.profilePhoto, 'false', 'true','','');
+          return false;
       }
   }).catch(function(error) {
       console.log("Error getting document:", error);
   });
+  return true;
   }
+
   //Adds entry to 'users' collection
   addDocument(docname,username, email, avatar,verified,newuser,favourites,history){
         console.log("user ID found: "+ docname);
@@ -118,8 +122,10 @@ export class AuthService {
           favourites: favourites,
           history: history,
       })
-      .then(function() {
-          console.log("User account created!");
+      //.then((doc) => 
+      .then((route) => {
+        console.log("User account created!");
+
       })
       .catch(function(error) {
           console.error("Error creating user account: ", error);
@@ -135,29 +141,68 @@ export class AuthService {
       return true;
   }
 
+  login(loginmethod, email, password){
+    console.log('method: '+loginmethod+ ' email: '+email+' password: '+password);
+     if (loginmethod == 'facebook.com'){
+      this.signInWithFacebook().then((res) => {
+        this.ngZone.run(() => this.router.navigate(['setpass']));
+      })
+      .catch((err) => console.log(err));
+      console.log('logged in with fb');
+    }else if (loginmethod == 'google.com'){
+      this.signInWithGoogle().then((res) => {
+        console.log(this.newuser);
+        if (this.newuser == 'false'){
+          this.ngZone.run(() => this.router.navigate(['setpass']));
+          console.log('existing user');
+        }
+          
+        else{
+          this.ngZone.run(() => this.router.navigate(['login']));
+          console.log('new user');
+        }
+
+        })
+      .catch((err) => console.log(err));
+      console.log('logged in with google');
+    }else if (loginmethod == 'email'){
+      this.signInRegular(email,password).then((res) => {
+        this.ngZone.run(() => this.router.navigate(['setpass']));
+        })
+      .catch((err) => console.log(err));
+      console.log('logged in with email');
+      }else if (loginmethod == 'intra.42.fr'){
+        this.signInWith42()
+      /*.then((res) => {
+        this.getUserDocument();
+        this.ngZone.run(() => this.router.navigate(['setpass']));
+        })
+      .catch((err) => console.log(err));
+      */
+    }
+
+  }
   signInWith42(){
     // this.getUserDocument();
-    window.alert("Need to link the API")
+    window.alert("Need to link the API");
   }
 
   signInWithFacebook() {
     // this.getUserDocument();
-    var zone = this.ngZone;
-    var route = this.router;
+    // var zone = this.ngZone;
+    // var route = this.router;
     var auth = firebase.auth();
-    var user = firebase.auth().currentUser;
+    // var user = firebase.auth().currentUser;
     
     this.loginmethod = 'facebook.com';
     return auth.signInWithPopup(
           new firebase.auth.FacebookAuthProvider()
-    ).then(function(result) {
-      
-      // if(result.additionalUserInfo.isNewUser){
-      //   zone.run(() => route.navigate(['setpass']));
-      //   console.log("existing user")
-      // }else{
-      //   console.log("new user");
-      // }
+          ////.then((doc) => 
+    ).then((result) => {
+      console.log(auth.currentUser.uid);
+      this.getUserDocument(auth.currentUser.uid)
+      // this.ngZone.run(() => this.router.navigate(['setpass']));
+      // console.log('worked!')
     }).catch(function(error) {
       
       // Handle errors here
@@ -250,9 +295,9 @@ export class AuthService {
     this.loginmethod = 'email';
     return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
   }
-  getLoggedIn(){
-    return this.db.collection("users").doc(this.uid);
-  }
+  // getLoggedIn(){
+  //   return this.db.collection("users").doc(this.uid);
+  // }
   //Get methods for user info
   getUsername(){
     return this.userDetails.displayName;

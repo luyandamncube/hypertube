@@ -32,6 +32,7 @@ export class SetpassComponent implements OnInit {
     return notSame ;         
   }
   ngOnInit() {
+
     if (this.authService.isVerified() == true)
       this.ngZone.run(() => this.router.navigate(['verifyemail']));
     this.passform = this.fb.group({   
@@ -58,16 +59,16 @@ export class SetpassComponent implements OnInit {
     this.pass = true;
     this.ngZone.run(() => this.router.navigate(['verifyemail']));
   }
-  signInWithFacebook(){
-    this.loginService.signInWithFacebook();
-  }
-  signInWithGoogle(){
-    this.loginService.signInWithFacebook();
-  }
-  signInWith42(){
-    this.loginService.signInWithFacebook();
-  }
-  signInWithEmail(email, pass){
-    this.loginService.signInWithEmail(email, pass); 
-  }
+  // signInWithFacebook(){
+  //   this.loginService.signInWithFacebook();
+  // }
+  // signInWithGoogle(){
+  //   this.loginService.signInWithFacebook();
+  // }
+  // signInWith42(){
+  //   this.loginService.signInWithFacebook();
+  // }
+  // signInWithEmail(email, pass){
+  //   this.loginService.signInWithEmail(email, pass); 
+  // }
 }

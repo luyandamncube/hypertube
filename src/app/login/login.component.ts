@@ -44,19 +44,30 @@ export class LoginComponent implements OnInit {
       ]],
   });
   }
-
-  signInWithFacebook(){
-    this.loginService.signInWithFacebook();
+  login(loginmethod,email, password){
+    this.authService.login(loginmethod,email,password);
   }
-  signInWithGoogle(){
-    this.loginService.signInWithGoogle();
-  }
-  signInWith42(){
-    this.loginService.signInWith42();
-  }
-  signInWithEmail(email, pass){
-    this.loginService.signInWithEmail(email, pass); 
-  }
+  // signInWithFacebook(){
+  //   this.loginService.signInWithFacebook();
+  // }
+  // signInWithGoogle(){
+  //   this.loginService.signInWithGoogle();
+  // }
+  // signInWith42(){
+  //   this.loginService.signInWith42();
+  // }
+  // signInWithEmail(email, pass){
+  //   this.authService.signInRegular(email,pass).then((res) => {
+  //     // console.log(this.authService.loginmethod);
+  //   //  this.authService.getUserDocument();
+  //     this.ngZone.run(() => this.router.navigate(['verifyemail']));
+  //   })
+  //   .catch(
+  //     function(err){
+  //       console.log("Error: " + err.message);
+  //     }
+  //   );
+  // }
   /*
     // Old-school:
     var a2 = a.map(function(s){ return s.length });

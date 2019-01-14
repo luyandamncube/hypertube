@@ -33,7 +33,7 @@
   </mat-form-field>
   <div style="margin-left: auto; margin-right: auto; padding : 10px 0px 0px 0px;width :80%">
     <button mat-flat-button  style=" float:left" routerLink="../signup" >Sign up</button>
-    <button [disabled]="!loginform.valid" (click)="signInWithEmail(email.value, password.value)" 
+    <button [disabled]="!loginform.valid" (click)="login(email, email.value, password.value)" 
     color="primary" style="background-color: lightgrey; float:right" mat-button>Sign in</button>
   </div>
   <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->
@@ -42,17 +42,17 @@
 <!-- <div> {{loginerror}} </div> -->
  <br><br>
   <div style="margin-left: auto; margin-right: auto; padding : 10px 0px 0px 0px;width :80%">
-    <button mat-stroked-button class="fb_btn"(click)="signInWithFacebook()">
+    <button mat-stroked-button class="fb_btn" (click)="login('facebook.com','','')">
       Continue with 
       <img style= "height : 20px;" src="assets/01.png"> 
     </button>
 <br><br>
-    <button mat-stroked-button class="google_btn"(click)="signInWithGoogle()">
+    <button mat-stroked-button class="google_btn" (click)="login('google.com','','')">
       Continue with
       <img style= "height : 15px;" src="assets/02.png">
     </button>
 <br><br>
-    <button mat-stroked-button class="fortytwo_btn"  (click)="signInWith42()">
+    <button mat-stroked-button class="fortytwo_btn" (click)="login('intra.42.fr','','')">
       Continue with
       <img style= "height : 15px;" src="assets/03.png"> 
     </button>
