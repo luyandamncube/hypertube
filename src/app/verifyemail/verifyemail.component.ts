@@ -31,16 +31,12 @@ export class VerifyemailComponent implements OnInit {
       this.message = 'Please check your email inbox at';
       // console.log(this.loginmethod);
     }
-    sendPasswordReset(){
-      this.sent = false;
-      this.authService.sendPasswordReset();
-      // this.reset_sent = true;
-    }
+
 
 
   ngOnInit() {
     if (this.authService.isVerified() == true)
-      this.ngZone.run(() => this.router.navigate(['home']));
+      this.ngZone.run(() => this.router.navigate(['/']));
 
   }
 

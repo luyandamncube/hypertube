@@ -64,8 +64,8 @@
 
         <div class="spacer"></div>
         <a style="float: right;" >
-         <img [matMenuTriggerFor]="menu"class="dp" *ngIf="current_dp" src="{{current_dp}}">
-        <img [matMenuTriggerFor]="menu" class="dp" *ngIf="!current_dp" src="../assets/04.png">
+         <img [matMenuTriggerFor]="menu"class="dp" src="{{user.avatar}}">
+
         </a>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>Language</button>

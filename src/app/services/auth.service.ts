@@ -69,32 +69,21 @@ export class AuthService {
   
   // Use fat arrow for linked functions, able to access class methods inside
   getUserDocument(uid){
-    var userdoc, tempav, tempus, tempne;
+    var userdoc;//, tempav, tempus, tempne;
 
     this.userloggedin = this.db.collection("users").doc(uid);
     this.userloggedin.get().then((doc) => {
       if (doc.exists) {
         userdoc = doc.data();
-
-        if (userdoc.newuser  == '' || userdoc.newuser == 'true'){
-          // console.log("New user");
-          tempav = this.profilePhoto;
-          tempus = this.displayName;
-          tempne = 'false';
-          this.updateAvatar(tempav);
-          // this.updateUsername(tempus.toLowerCase( ));
-          this.updateNewuser(tempne);
-        }else{
-          tempav = userdoc.avatar;
-          tempus = userdoc.username;
-          tempne = userdoc.newuser;
-        }
-        this.avatar = tempav;
+        // tempav = userdoc.avatar;
+        // tempus = userdoc.username;
+        // tempne = userdoc.newuser;
+        this.avatar = userdoc.avatar;
         this.email = userdoc.email;
         this.favourites = userdoc.favourites;
         this.history = userdoc.history;
-        this.newuser = tempne;
-        this.username = tempus;
+        this.newuser = userdoc.newuser;
+        this.username = userdoc.username;
         this.verified = userdoc.verified;
         
       } else {
@@ -122,7 +111,6 @@ export class AuthService {
           favourites: favourites,
           history: history,
       })
-      //.then((doc) => 
       .then((route) => {
         console.log("User account created!");
 
@@ -142,35 +130,22 @@ export class AuthService {
   }
 
   login(loginmethod, email, password){
-    console.log('method: '+loginmethod+ ' email: '+email+' password: '+password);
+    console.log(loginmethod);
      if (loginmethod == 'facebook.com'){
       this.signInWithFacebook().then((res) => {
-        this.ngZone.run(() => this.router.navigate(['setpass']));
+        // this.ngZone.run(() => this.router.navigate(['success']));
       })
       .catch((err) => console.log(err));
-      console.log('logged in with fb');
-    }else if (loginmethod == 'google.com'){
-      this.signInWithGoogle().then((res) => {
-        console.log(this.newuser);
-        if (this.newuser == 'false'){
-          this.ngZone.run(() => this.router.navigate(['setpass']));
-          console.log('existing user');
-        }
-          
-        else{
-          this.ngZone.run(() => this.router.navigate(['login']));
-          console.log('new user');
-        }
-
-        })
+     } else if (loginmethod == 'google.com'){
+       this.signInWithGoogle().then((res) => {
+        // this.ngZone.run(() => this.router.navigate(['success']));
+      })
       .catch((err) => console.log(err));
-      console.log('logged in with google');
-    }else if (loginmethod == 'email'){
+    } else if (loginmethod == 'email'){
       this.signInRegular(email,password).then((res) => {
-        this.ngZone.run(() => this.router.navigate(['setpass']));
-        })
+        // this.ngZone.run(() => this.router.navigate(['success']));
+      })
       .catch((err) => console.log(err));
-      console.log('logged in with email');
       }else if (loginmethod == 'intra.42.fr'){
         this.signInWith42()
       /*.then((res) => {
@@ -183,26 +158,24 @@ export class AuthService {
 
   }
   signInWith42(){
-    // this.getUserDocument();
     window.alert("Need to link the API");
   }
 
   signInWithFacebook() {
-    // this.getUserDocument();
-    // var zone = this.ngZone;
-    // var route = this.router;
+
     var auth = firebase.auth();
-    // var user = firebase.auth().currentUser;
-    
     this.loginmethod = 'facebook.com';
     return auth.signInWithPopup(
           new firebase.auth.FacebookAuthProvider()
-          ////.then((doc) => 
     ).then((result) => {
       console.log(auth.currentUser.uid);
-      this.getUserDocument(auth.currentUser.uid)
-      // this.ngZone.run(() => this.router.navigate(['setpass']));
-      // console.log('worked!')
+      this.getUserDocument(auth.currentUser.uid);
+      console.log("is new user: "+ result.additionalUserInfo.isNewUser);
+      if (result.additionalUserInfo.isNewUser === true){
+        this.ngZone.run(() => this.router.navigate(['success']));
+      }else{
+        this.ngZone.run(() => this.router.navigate(['verifyemail']));
+      }
     }).catch(function(error) {
       
       // Handle errors here
@@ -266,44 +239,37 @@ export class AuthService {
 }
 
   signInWithGoogle() {
-    // this.getUserDocument();
+    var auth = firebase.auth();
     this.loginmethod = 'google.com';
-    var zone = this.ngZone;
-    var route = this.router;
     return this._firebaseAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider()
-    ).then(function(result) {
+    ).then((result) => {
+      this.getUserDocument(auth.currentUser.uid);
+      console.log("is new user: "+ result.additionalUserInfo.isNewUser);
+      if (result.additionalUserInfo.isNewUser === true){
+        this.ngZone.run(() => this.router.navigate(['success']));
+      }else{
+        this.ngZone.run(() => this.router.navigate(['verifyemail']));
+      }
     }).catch(function(error) {
         console.log("Error signing in with Google:", error.message);
     });
   }
 
-  // signInWithGithub() {
-  //   return this._firebaseAuth.auth.signInWithPopup(
-  //     new firebase.auth.GithubAuthProvider()
-  //   )
-  // }
-
-  // signInWithTwitter() {
-  //   return this._firebaseAuth.auth.signInWithPopup(
-  //     new firebase.auth.TwitterAuthProvider()
-  //   )
-  // }
-
   signInRegular(email, password) {
-    // this.getUserDocument();
+    var auth = firebase.auth();
     this.loginmethod = 'email';
+
+    console.log(auth.currentUser.uid);
+    this.getUserDocument(auth.currentUser.uid);
     return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
   }
-  // getLoggedIn(){
-  //   return this.db.collection("users").doc(this.uid);
-  // }
   //Get methods for user info
   getUsername(){
     return this.userDetails.displayName;
   }
   getUserID(){
-    return this.userDetails.uid
+    return this.userDetails.uid;
   }
   getEmail(){
     return this.userDetails.email;
@@ -313,6 +279,13 @@ export class AuthService {
   }
   getLoginMethod(){
     return this.loginmethod;
+  }
+  //Get methods for firebase database info
+  isNewUser(){
+    return this.newuser;
+  }
+  getAvatar(){
+    return this.avatar;
   }
   //User management
   isLoggedIn() {
@@ -332,17 +305,20 @@ export class AuthService {
       // An error happened.
     });
   }
-  sendPasswordReset(){
-    var user = this._firebaseAuth.auth;
-    var email = this.getEmail();
+  // sendPasswordReset(emailadress){
+  //   var user = this._firebaseAuth.auth;
+  //   // var email = this.getEmail();
 
-    user.sendPasswordResetEmail(email).then(function() {
-      // Email sent.
-    }).catch(function(error) {
-      // An error happened.
-    });
-
-  }
+  //   return user.sendPasswordResetEmail(emailadress).then((res) => {
+  //     // Email sent.
+      
+  //   }).catch(function(error) {
+  //     // An error happened.
+  //     console.log("Error sending reset link: "+ error.message);
+  //     // return false
+  //   });
+  //   // return true;
+  // }
   setPassword(newPassword){
     this._firebaseAuth.auth.currentUser.updatePassword(newPassword).then(function(){
       }).catch(function(error) {
@@ -354,7 +330,7 @@ export class AuthService {
     this._firebaseAuth.auth.signOut()
     .then((res) => this.router.navigate(['login']));
   }
-  //Update methods
+  //Update db methods
   updateAvatar(info){
     return this.userloggedin.update({
       avatar: info

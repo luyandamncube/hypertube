@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RoutesRecognized  } from '@angular/router';
+import { filter, pairwise } from 'rxjs/operators';
 //Add password form
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -17,6 +18,7 @@ export class SetpassComponent implements OnInit {
   newPassword = null;
   hide = true;
   pass = false;
+  goback = false;
   constructor(
     private authService: AuthService, 
     private loginService: LoginService, 
@@ -32,9 +34,6 @@ export class SetpassComponent implements OnInit {
     return notSame ;         
   }
   ngOnInit() {
-
-    if (this.authService.isVerified() == true)
-      this.ngZone.run(() => this.router.navigate(['verifyemail']));
     this.passform = this.fb.group({   
       password: ['', [
         Validators.required, 
@@ -45,7 +44,16 @@ export class SetpassComponent implements OnInit {
       
     ]],
     }, {validators: this.checkPasswords });
-
+    //Find which route is the previous one
+    // this.router.events
+    // .pipe(filter((e: any) => e instanceof RoutesRecognized),
+    //     pairwise()
+    // ).subscribe((e: any) => {
+    //     console.log(e[0].urlAfterRedirects); // previous url
+    //     if (e[0].urlAfterRedirects == '/home/(index:profile)'){
+    //       this.goback = true;
+    //     }
+    // });
   }
   get password(){
     return this.passform.get('password');
@@ -57,18 +65,14 @@ export class SetpassComponent implements OnInit {
   setPassword(newPassword){
     this.authService.setPassword(newPassword);
     this.pass = true;
-    this.ngZone.run(() => this.router.navigate(['verifyemail']));
+    // this.ngZone.run(() => this.router.navigate(['verifyemail']));
   }
-  // signInWithFacebook(){
-  //   this.loginService.signInWithFacebook();
-  // }
-  // signInWithGoogle(){
-  //   this.loginService.signInWithFacebook();
-  // }
-  // signInWith42(){
-  //   this.loginService.signInWithFacebook();
-  // }
-  // signInWithEmail(email, pass){
-  //   this.loginService.signInWithEmail(email, pass); 
-  // }
+  resume(){
+    // if (this.goback == false)
+      this.authService.logout();
+    // else
+    //    this.ngZone.run(() => this.router.navigate(['/home/(index:profile)']));
+    
+  }
+
 }

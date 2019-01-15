@@ -42,10 +42,12 @@ import { NotfoundComponent } from './notfound/notfound.component';
 //Auth Services
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
-import { LoginService } from './services/login.service';
+// import { LoginService } from './services/login.service';
 import { ProfileComponent } from './profile/profile.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { SetpassComponent } from './setpass/setpass.component';
+import { SuccessComponent } from './success/success.component';
+import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { SetpassComponent } from './setpass/setpass.component';
     NotfoundComponent,
     ProfileComponent,
     VerifyemailComponent,
-    SetpassComponent
+    SetpassComponent,
+    SuccessComponent,
+    ForgotpassComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +88,7 @@ import { SetpassComponent } from './setpass/setpass.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AngularFirestore, AuthService, AuthGuard, LoginService],
+  providers: [AngularFirestore, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

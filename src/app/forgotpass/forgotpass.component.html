@@ -1,0 +1,31 @@
+<mat-card > 
+
+<div *ngIf="!sent" class="border">
+
+  <mat-card-title>Type in account email</mat-card-title>
+  <mat-card-subtitle> To continue, please type in the email associated with your hypertube account</mat-card-subtitle>
+
+  <form [formGroup]="emailform">
+
+    Value:{{emailform.value | json}} 
+    <hr>
+
+      <mat-form-field appearance="standard" style="width:100%;">
+        <mat-label>Update email address</mat-label>
+        <input autocomplete="email" matInput formControlName="email" placeholder="Email">
+        <mat-error *ngIf="email.value == ''"> Please enter email </mat-error>
+        <mat-error *ngIf="email.invalid && email.value"> Your email does not look right </mat-error>
+      </mat-form-field>
+    <br>
+    <button [disabled]="!emailform.valid" mat-flat-button style="background-color: LightGray; " (click)="sendemail(email.value)"> Send password reset link</button>
+  </form>
+
+</div>
+
+<div *ngIf="sent" class="border">
+
+  <mat-card-title> Password reset link sent!</mat-card-title>
+  <mat-card-subtitle> To continue, please go to your inbox at {{useremail}}</mat-card-subtitle>
+<button mat-flat-button style="background-color: LightGray; "routerLink="../login"> Go to login</button>
+</div>
+</mat-card>

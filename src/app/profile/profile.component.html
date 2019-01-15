@@ -29,7 +29,7 @@
       <mat-label>Update username</mat-label>
       <input matInput formControlName="name" placeholder="Username">
       <mat-error *ngIf="name.value == ''"> Please enter username </mat-error>
-      <mat-error *ngIf="name.invalid && email.value"> Your username does not look right </mat-error>
+      <mat-error *ngIf="name.invalid && name.value"> Your username does not look right </mat-error>
     </mat-form-field>
     <br><br>
     <div style="margin-left: auto; margin-right: auto; padding : 0px 0px 0px 0px;width :80%">
@@ -37,9 +37,9 @@
       <button mat-flat-button (click)="resetform()" style="float:left">Reset</button>
       <button [disabled]="!profileform.valid" (click)="update()"  color="primary" style="background-color: lightgrey; float:right" mat-button>Update</button>
     </div>
-    <br>
+    <br><br>
     <!--
-    <button mat-raised-button (click)="changepass()">Change Password</button>
+    <button mat-raised-button (click)="setpass()">Change Password</button>
     
     <div *ngIf= "changedpass" >
       <mat-form-field appearance="standard" style="width:80%;">

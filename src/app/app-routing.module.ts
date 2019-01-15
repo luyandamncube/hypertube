@@ -11,6 +11,8 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { ProfileComponent } from './profile/profile.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { SetpassComponent } from './setpass/setpass.component';
+import { SuccessComponent } from './success/success.component';
+import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 //Auth
 import { AuthGuard } from './services/auth-guard.service';
 
@@ -23,6 +25,8 @@ const routes: Routes = [
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
   {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
   {path: 'setpass',  canActivate: [AuthGuard], component: SetpassComponent},
+  {path: 'success',  canActivate: [AuthGuard], component: SuccessComponent},
+  {path: 'forgot', component: ForgotpassComponent},
   //auxilliary routing
   {
     path: 'home', canActivate: [AuthGuard], component: HomeComponent,

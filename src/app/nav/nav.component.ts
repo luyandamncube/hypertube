@@ -2,6 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 //Imports for Angular Routing Loading Indicator
 
 //Auth
@@ -31,7 +32,14 @@ export class NavComponent {
     );
 
   //Constructor injection for Angular Routing Loading Indicator
-  loading = false;
+  // loading = false;
+  user = {
+    name: '',
+    avatar: '',
+    email:  '',
+    // password: '',
+    // verified: this.authService.isVerified(),
+  };
   constructor(
     private breakpointObserver: BreakpointObserver, 
     private authService: AuthService, 
@@ -70,13 +78,21 @@ export class NavComponent {
     //   this.current_email = this.authService.email;console.log(this.current_email);
     //   this.current_dp = this.authService.avatar;console.log(this.current_dp);
     // }
-    
+    // var auth = firebase.auth();
 
+    // this.authService.getUserDocument(auth.currentUser.uid);
+    this.user.avatar =  this.authService.avatar;
+    this.user.name =  this.authService.username;
+    this.user.email =  this.authService.email;
+    // window.location.reload();
+    // console.log(this.authService.avatar);
+    // console.log(this.user.avatar);
+    // console.log(this.authService.getAvatar());
   }
   
-  current_username = this.authService.username; 
-  current_email = this.authService.email;sx
-  current_dp = this.authService.avatar;
+  // current_username = this.authService.username; 
+  // current_email = this.authService.email;
+  // current_dp = this.authService.getAvatar();
 
   logout() {
     this.authService.logout();

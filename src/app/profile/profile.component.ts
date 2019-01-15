@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 //Edit profile form
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 //To retrieve user info
 import { AuthService } from '../services/auth.service';
+import { Router} from '@angular/router';
+
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -28,6 +31,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb : FormBuilder,
     private authService: AuthService, 
+    private router: Router, 
+    private ngZone: NgZone,
   ) { }
   //Regex, aplhanumeric characters only
   includes = "[a-zA-Z0-9]*";
@@ -65,9 +70,28 @@ export class ProfileComponent implements OnInit {
     // window.alert("Reset!");
   }
   update(){
-    // this.authService.updateUsername();
-    // this.authService.updateEmail();
-    // this.authService.updateAvatar();
+    console.log(this.profileform.get('name').value);
+    console.log(this.profileform.get('email').value);
+    if (this.user.name != this.profileform.get('name').value){
+      console.log("changed username");
+      this.authService.updateUsername(this.profileform.get('name').value);
+      this.user.name = this.profileform.get('name').value;
+    }
+    if (this.user.email != this.profileform.get('email').value){
+      console.log("changed username");
+      // this.authService.updateEmail(this.profileform.get('email').value);
+      //    this.user.email = this.profileform.get('email').value;
+    }
+    // 
+ 
+
+
+    //ADD USER NAME SEARCH HERE, WITH FIREBASE OBJECT OBSERVABLE
+
+  }
+
+  setpass(){
+    this.ngZone.run(() => this.router.navigate(['setpass']));
   }
   changepass(){
     if(this.changedpass = false)
