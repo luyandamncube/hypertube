@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 // import { AngularFirestore,  } from '@angular/fire/firestore';
 import { tap, first } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { LoginService } from '../services/login.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-signup',
@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
     private fb : FormBuilder, 
     // private afs : AngularFirestore,
     private authService : AuthService,
-    private loginService : LoginService,
+    public snackBar: MatSnackBar,
   ) {}
   //Regex, aplhanumeric characters only
   includes = "[a-zA-Z0-9]*";
@@ -76,7 +76,7 @@ export class SignupComponent implements OnInit {
     this.quickloginpass = password;
     var error = this.authService.createAccount(this.quickloginemail , this.quickloginpass );
     if (error == false){
-      console.log(error);
+
       return (false);
     }else{
       return(true);
@@ -91,31 +91,24 @@ export class SignupComponent implements OnInit {
     var formValue = this.signupform.value;
 
     try{
-      console.log("Entered user signup...");
       var error = this.createUser(formValue.email, formValue.password);
       if (error == true){
         this.success = true;
       var currentuser;
       //Quick login user
       this.authService.signInRegular(formValue.email, formValue.password).then((res) => {
-        // console.log(this.authService.loginmethod);
-        // this.ngZone.run(() => this.router.navigate(['verifyemail']));
         currentuser = this.authService.getUserID();
         this.authService.addDocument(currentuser,formValue.username, formValue.email, '', 'false','true', '', '');
-        console.log("user logged in: "+ currentuser);
+
       })
-      .catch(
-        function(err){
-          console.log("Error: " + err.message);
+      .catch((error) => {
+          this.snackBar.open( error.message, 'close', {
+            duration: 4000,
+          });
         }
       );
+      this.loading = false; 
 
-        //log user in : FUTURE WORK
-      /*
-        this.signInWithEmail();
-        console.log("pass: "+this.quickloginpass);
-        console.log("email: "+this.email)
-        */
       }
       
 

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router  } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-forgotpass',
@@ -22,6 +23,7 @@ export class ForgotpassComponent implements OnInit {
     private ngZone: NgZone,
     private authService: AuthService, 
     private _firebaseAuth: AngularFireAuth, 
+    public snackBar: MatSnackBar,
 
   ) { }
 
@@ -41,10 +43,11 @@ export class ForgotpassComponent implements OnInit {
     return user.sendPasswordResetEmail(emailadress).then((res) => {
       this.sent = true;
       this.useremail = emailadress;
-    }).catch(
-      function(error) {
+    }).catch((error) => {
         // An error happened.
-        console.log("Error sending reset link: "+ error.message);
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
       });
 
   }

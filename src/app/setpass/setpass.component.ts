@@ -1,12 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { Router, RoutesRecognized  } from '@angular/router';
-import { filter, pairwise } from 'rxjs/operators';
+// import { Router, RoutesRecognized  } from '@angular/router';
+// import { filter, pairwise } from 'rxjs/operators';
 //Add password form
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 //Auth
 import { AuthService } from '../services/auth.service';
-import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-setpass',
@@ -21,10 +20,9 @@ export class SetpassComponent implements OnInit {
   goback = false;
   constructor(
     private authService: AuthService, 
-    private loginService: LoginService, 
     private fb : FormBuilder, 
-    private router: Router, 
-    private ngZone: NgZone,
+    // private router: Router, 
+    // private ngZone: NgZone,
   ) { }
   checkPasswords(passform) { // here we have the 'passwords' group
     let pass = passform.controls.password.value;
@@ -44,16 +42,7 @@ export class SetpassComponent implements OnInit {
       
     ]],
     }, {validators: this.checkPasswords });
-    //Find which route is the previous one
-    // this.router.events
-    // .pipe(filter((e: any) => e instanceof RoutesRecognized),
-    //     pairwise()
-    // ).subscribe((e: any) => {
-    //     console.log(e[0].urlAfterRedirects); // previous url
-    //     if (e[0].urlAfterRedirects == '/home/(index:profile)'){
-    //       this.goback = true;
-    //     }
-    // });
+
   }
   get password(){
     return this.passform.get('password');

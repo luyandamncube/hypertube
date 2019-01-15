@@ -4,7 +4,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore,  } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
-import { yearsPerPage } from '@angular/material/datepicker/typings/multi-year-view';
+//Snackbar
+import {MatSnackBar} from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -40,44 +41,42 @@ export class AuthService {
     private afs : AngularFirestore,
     private router: Router,
     private ngZone: NgZone,
+    public snackBar: MatSnackBar,
     // private fba : firebase,
   ) { 
     this.user = _firebaseAuth.authState;
     this.user.subscribe(
       (user) => {
-      if (user) {
-        
-        this.userDetails = user;
-        this.profilePhoto = this.userDetails.photoURL;
-        // console.log(this.profilePhoto);
-        this.displayName = this.userDetails.displayName;
-        // console.log(this.displayName);
-        this.providerId = this.userDetails.providerId;
-        // console.log( this.providerId);
-        this.displayEmail = this.userDetails.email;
-      }
-      else {
-        this.userDetails = null;
-      }
+        if (user) {
+          
+          this.userDetails = user;
+          this.profilePhoto = this.userDetails.photoURL;
+          this.displayName = this.userDetails.displayName;
+          this.providerId = this.userDetails.providerId;
+          this.displayEmail = this.userDetails.email;
+        }
+        else {
+          this.userDetails = null;
+        }
       }
     );
-    
+
   }
+  loading = false;
   ngOnInit(){
 
   }
-  
+
+    
   // Use fat arrow for linked functions, able to access class methods inside
   getUserDocument(uid){
-    var userdoc;//, tempav, tempus, tempne;
+    var userdoc;
 
     this.userloggedin = this.db.collection("users").doc(uid);
-    this.userloggedin.get().then((doc) => {
+    this.userloggedin.get().then(async (doc) => {
       if (doc.exists) {
         userdoc = doc.data();
-        // tempav = userdoc.avatar;
-        // tempus = userdoc.username;
-        // tempne = userdoc.newuser;
+
         this.avatar = userdoc.avatar;
         this.email = userdoc.email;
         this.favourites = userdoc.favourites;
@@ -85,21 +84,31 @@ export class AuthService {
         this.newuser = userdoc.newuser;
         this.username = userdoc.username;
         this.verified = userdoc.verified;
-        
       } else {
-          console.log("No such document!");
           //addDocument(docname,username, email, avatar,verified,newuser,favourites,history)
-          this.addDocument(uid,'',this.displayEmail, this.profilePhoto, 'false', 'true','','');
+          try{
+            await this.addDocument(uid,'',this.displayEmail, this.profilePhoto, 'false', 'true','','');
+
+          }catch(error){
+            this.snackBar.open( error.message, 'close', {
+              duration: 4000,
+            });
+          }
+          // this.loading = false;
+
           return false;
       }
-  }).catch(function(error) {
-      console.log("Error getting document:", error);
+  }).catch((error) => {
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
   });
+  // this.loading = false;
   return true;
   }
 
   //Adds entry to 'users' collection
-  addDocument(docname,username, email, avatar,verified,newuser,favourites,history){
+  addDocument(docname, username, email, avatar, verified, newuser, favourites, history){
         console.log("user ID found: "+ docname);
         // Add a new user account in collections
         this.db.collection("users").doc(docname).set({
@@ -115,15 +124,18 @@ export class AuthService {
         console.log("User account created!");
 
       })
-      .catch(function(error) {
-          console.error("Error creating user account: ", error);
+      .catch((error) => {
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
       });
   }
 
   createAccount(email, password){
     this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-      var errorMessage = error.message;
-      console.log("Error creating account:", errorMessage)
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
       return false;
     });
       return true;
@@ -133,21 +145,21 @@ export class AuthService {
     console.log(loginmethod);
      if (loginmethod == 'facebook.com'){
       this.signInWithFacebook().then((res) => {
-        // this.ngZone.run(() => this.router.navigate(['success']));
+
       })
       .catch((err) => console.log(err));
      } else if (loginmethod == 'google.com'){
        this.signInWithGoogle().then((res) => {
-        // this.ngZone.run(() => this.router.navigate(['success']));
+
       })
       .catch((err) => console.log(err));
     } else if (loginmethod == 'email'){
       this.signInRegular(email,password).then((res) => {
-        // this.ngZone.run(() => this.router.navigate(['success']));
+
       })
       .catch((err) => console.log(err));
       }else if (loginmethod == 'intra.42.fr'){
-        this.signInWith42()
+        this.signInWith42();
       /*.then((res) => {
         this.getUserDocument();
         this.ngZone.run(() => this.router.navigate(['setpass']));
@@ -158,17 +170,26 @@ export class AuthService {
 
   }
   signInWith42(){
-    window.alert("Need to link the API");
+ //When deployed on firebase
+//  return window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=https%3A%2F%2Fhypertube-16d52.firebaseapp.com%2Fhome&response_type=code';
+   //When on localhost
+   return window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fhome&response_type=code';
+    /*
+    return window.location.href = 'https://api.intra.42.fr/oauth/authorize?
+    client_id=b654f310dbf2bada79b1ed5cb10d6b19ece7fc5649ad79ca9e4dbfc349fd082c&
+    redirect_uri=http%3A%2F%2Flocalhost%3A4200%2FLogin&
+    response_type=code'
+    */
   }
 
   signInWithFacebook() {
-
-    var auth = firebase.auth();
     this.loginmethod = 'facebook.com';
+    var auth = firebase.auth();
     return auth.signInWithPopup(
           new firebase.auth.FacebookAuthProvider()
     ).then((result) => {
-      console.log(auth.currentUser.uid);
+
+      // this.loginmethod = result.credential.providerId; 
       this.getUserDocument(auth.currentUser.uid);
       console.log("is new user: "+ result.additionalUserInfo.isNewUser);
       if (result.additionalUserInfo.isNewUser === true){
@@ -176,7 +197,7 @@ export class AuthService {
       }else{
         this.ngZone.run(() => this.router.navigate(['verifyemail']));
       }
-    }).catch(function(error) {
+    }).catch((error) =>{
       
       // Handle errors here
       if (error.code === 'auth/account-exists-with-different-credential') {
@@ -204,7 +225,11 @@ export class AuthService {
             }).then(function() {
               // Facebook account successfully linked to the existing Firebase user.
               //ADD "Successfully linked" component here
-              console.log("facebook account successfully linked!");
+              // console.log("facebook account successfully linked!");
+              this.snackBar.open( 'facebook account successfully linked!', 'close', {
+                duration: 4000,
+              });
+
             });
             return;
           }
@@ -229,10 +254,17 @@ export class AuthService {
               // Facebook account successfully linked to the existing Firebase user.
               //ADD "Successfully linked" component here
             }).catch( (errorInLinking) => {
-              console.log(errorInLinking);
+              // console.log(errorInLinking);
+              this.snackBar.open( errorInLinking, 'close', {
+                duration: 4000,
+              });
             });
           });
       });
+  }else{
+    this.snackBar.open( error.message, 'close', {
+      duration: 4000,
+    });
   }
 });
 
@@ -251,8 +283,11 @@ export class AuthService {
       }else{
         this.ngZone.run(() => this.router.navigate(['verifyemail']));
       }
-    }).catch(function(error) {
-        console.log("Error signing in with Google:", error.message);
+    }).catch((error) => {
+        // console.log("Error signing in with Google:", error.message);
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
     });
   }
 
@@ -301,8 +336,11 @@ export class AuthService {
   verifyEmail(){
     this._firebaseAuth.auth.currentUser.sendEmailVerification().then(function() {
       // Email sent.
-    }).catch(function(error) {
+    }).catch((error) => {
       // An error happened.
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     });
   }
   // sendPasswordReset(emailadress){
@@ -321,8 +359,10 @@ export class AuthService {
   // }
   setPassword(newPassword){
     this._firebaseAuth.auth.currentUser.updatePassword(newPassword).then(function(){
-      }).catch(function(error) {
-
+      }).catch((error) =>{
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
       });
 
   }
@@ -338,9 +378,11 @@ export class AuthService {
     .then(function() {
       console.log("Document successfully updated!");
     })
-    .catch(function(error) {
+    .catch((error) => {
       // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
     });
   }
   updateEmail(info){
@@ -350,9 +392,11 @@ export class AuthService {
     .then(function() {
       console.log("Document successfully updated!");
     })
-    .catch(function(error) {
+    .catch((error) =>{
       // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     });
   }
   updateFavourites(info){
@@ -362,9 +406,12 @@ export class AuthService {
     .then(function() {
       console.log("Document successfully updated!");
     })
-    .catch(function(error) {
+    .catch((error) => {
       // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
+      // console.error("Error updating document: ", error);
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     });
   }
   updateHistory(info){
@@ -389,9 +436,12 @@ export class AuthService {
     .then(function() {
       console.log("Document successfully updated!");
     })
-    .catch(function(error) {
+    .catch((error) => {
       // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
+      // console.error("Error updating document: ", error);
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     });
   }
   updateUsername(info){
@@ -401,9 +451,12 @@ export class AuthService {
     .then(function() {
       console.log("Document successfully updated!");
     })
-    .catch(function(error) {
+    .catch((error) => {
       // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
+      // console.error("Error updating document: ", error);
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     });
   }
   updateVerified(info){
@@ -413,9 +466,12 @@ export class AuthService {
     .then(function() {
       console.log("Document successfully updated!");
     })
-    .catch(function(error) {
+    .catch((error) => {
       // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
+      // console.error("Error updating document: ", error);
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     });
   }
 }

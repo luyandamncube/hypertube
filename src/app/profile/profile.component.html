@@ -1,10 +1,7 @@
-<mat-card style="height: 89vh;"> 
   <div class="border">
+    <span style="height : 10px;"> </span>
     <img class="dp" *ngIf="user.avatar" src="{{user.avatar}}">
     <img class="dp" *ngIf="!user.avatar" src="../assets/04.png">
-  </div>
-
-  <div class="border">
     <mat-card-title>{{user.name}}</mat-card-title>
     <mat-card-subtitle *ngIf="user.verified"> Verified</mat-card-subtitle>
     <mat-card-subtitle *ngIf="!user.verified"> Not Verified</mat-card-subtitle>
@@ -13,10 +10,10 @@
   </div>
 <div class="border">
   <form [formGroup]="profileform">
-    
+    <!--
     Value:{{profileform.value | json}} 
     <hr>
-    
+    --> 
    
     <mat-form-field appearance="standard" style="width:100%;">
       <mat-label>Update email address</mat-label>
@@ -32,9 +29,9 @@
       <mat-error *ngIf="name.invalid && name.value"> Your username does not look right </mat-error>
     </mat-form-field>
     <br><br>
-    <div style="margin-left: auto; margin-right: auto; padding : 0px 0px 0px 0px;width :80%">
+    <div style="margin-left: auto; margin-right: auto;width : 100%">
       
-      <button mat-flat-button (click)="resetform()" style="float:left">Reset</button>
+      <button mat-flat-button (click)="resetform()" style="float:left">Reset fields</button>
       <button [disabled]="!profileform.valid" (click)="update()"  color="primary" style="background-color: lightgrey; float:right" mat-button>Update</button>
     </div>
     <br><br>
@@ -65,4 +62,3 @@
 
 
 </div>
-</mat-card>

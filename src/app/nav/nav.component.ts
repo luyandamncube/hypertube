@@ -24,8 +24,6 @@ import {
 })
 export class NavComponent {
   apptitle = 'Hypertube';
-
-  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
@@ -44,10 +42,8 @@ export class NavComponent {
     private breakpointObserver: BreakpointObserver, 
     private authService: AuthService, 
     private router: Router, 
-    private ngZone: NgZone,
-
+    private ngZone: NgZone
   ){
-
     /*
     this.router.events.subscribe((event: Event) => {
       switch (true) {
@@ -55,7 +51,6 @@ export class NavComponent {
           this.loading = true;
           break;
         }
-
         case event instanceof NavigationEnd:
         case event instanceof NavigationCancel:
         case event instanceof NavigationError: {
@@ -68,31 +63,14 @@ export class NavComponent {
       }
     });
     */
-
   }
   
   ngOnInit(){
-    //New user setup
-    // if (this.authService.isLoggedIn()){
-    //   this.current_username = this.authService.username; console.log(this.current_username);
-    //   this.current_email = this.authService.email;console.log(this.current_email);
-    //   this.current_dp = this.authService.avatar;console.log(this.current_dp);
-    // }
-    // var auth = firebase.auth();
-
-    // this.authService.getUserDocument(auth.currentUser.uid);
     this.user.avatar =  this.authService.avatar;
     this.user.name =  this.authService.username;
     this.user.email =  this.authService.email;
-    // window.location.reload();
-    // console.log(this.authService.avatar);
-    // console.log(this.user.avatar);
-    // console.log(this.authService.getAvatar());
   }
-  
-  // current_username = this.authService.username; 
-  // current_email = this.authService.email;
-  // current_dp = this.authService.getAvatar();
+
 
   logout() {
     this.authService.logout();

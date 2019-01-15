@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 //To retrieve user info
 import { AuthService } from '../services/auth.service';
 import { Router} from '@angular/router';
-
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService, 
     private router: Router, 
     private ngZone: NgZone,
+    public snackBar: MatSnackBar,
   ) { }
   //Regex, aplhanumeric characters only
   includes = "[a-zA-Z0-9]*";
@@ -70,21 +71,17 @@ export class ProfileComponent implements OnInit {
     // window.alert("Reset!");
   }
   update(){
-    console.log(this.profileform.get('name').value);
-    console.log(this.profileform.get('email').value);
     if (this.user.name != this.profileform.get('name').value){
-      console.log("changed username");
       this.authService.updateUsername(this.profileform.get('name').value);
       this.user.name = this.profileform.get('name').value;
+      this.snackBar.open( "Updated username", 'close', {
+        duration: 4000,
+      });
     }
     if (this.user.email != this.profileform.get('email').value){
-      console.log("changed username");
       // this.authService.updateEmail(this.profileform.get('email').value);
       //    this.user.email = this.profileform.get('email').value;
     }
-    // 
- 
-
 
     //ADD USER NAME SEARCH HERE, WITH FIREBASE OBJECT OBSERVABLE
 

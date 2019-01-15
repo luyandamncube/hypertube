@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, 
+  MatIconModule, MatListModule, MatCardModule } from '@angular/material';
 //Imports for Angular Material login components
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 //Import for dropdown menu
 import {MatMenuModule} from '@angular/material/menu';
 //imports for progress bars
@@ -78,7 +80,7 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
     MatIconModule, MatListModule, MatExpansionModule,
     MatInputModule, MatFormFieldModule,  MatCheckboxModule,  
     MatChipsModule, MatCardModule, MatProgressSpinnerModule, 
-    MatMenuModule, MatProgressBarModule,
+    MatMenuModule, MatProgressBarModule,MatSnackBarModule,
     //Language selector
     MatButtonToggleModule,
     //Forms

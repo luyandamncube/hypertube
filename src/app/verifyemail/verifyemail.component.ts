@@ -29,7 +29,6 @@ export class VerifyemailComponent implements OnInit {
       this.authService.verifyEmail();
       this.sent = true;
       this.message = 'Please check your email inbox at';
-      // console.log(this.loginmethod);
     }
 
 
