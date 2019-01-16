@@ -1,11 +1,16 @@
-<div style="text-align : center; margin-left: auto;
-  margin-right: auto; width : 360px; padding: 30px 0px 0px 0px">
-    <img style = "height: 50px;" src="assets/00.png">
-    <h1>Sign in</h1>
-    <!-- <p>Continue to hypertube</p> --> 
+<div *ngIf="loading">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 
 <div style="text-align : center; margin-left: auto;
+  margin-right: auto; width : 360px; padding: 30px 0px 0px 0px">
+    <img style = "height: 50px;" src="assets/00.png">
+    <h1 *ngIf="!loading">Sign in</h1>
+    <h1 *ngIf="loading">Loading...</h1>
+    <!-- <p>Continue to hypertube</p> --> 
+</div>
+
+<div *ngIf="!loading" style="text-align : center; margin-left: auto;
   margin-right: auto; height : 360px; width : 360px">
 
 <form [formGroup]="loginform">
@@ -33,7 +38,7 @@
   </mat-form-field>
   <div style="margin-left: auto; margin-right: auto; padding : 10px 0px 0px 0px;width :80%">
     <button mat-flat-button  style=" float:left" routerLink="../signup" >Sign up</button>
-    <button [disabled]="!loginform.valid" (click)="login(email, email.value, password.value)" 
+    <button [disabled]="!loginform.valid" (click)="login('email', email.value, password.value)" 
     color="primary" style="background-color: lightgrey; float:right" mat-button>Sign in</button>
   </div>
   <!-- <button md-button class="submit-btn" type="button" [disabled]="!UserLogin.form.valid">Login!</button>-->

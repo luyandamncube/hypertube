@@ -64,7 +64,9 @@
 
         <div class="spacer"></div>
         <a style="float: right;" >
-         <img [matMenuTriggerFor]="menu"class="dp" src="{{user.avatar}}">
+         <img [matMenuTriggerFor]="menu"class="dp" *ngIf="user.avatar" src="{{user.avatar}}">
+         <img [matMenuTriggerFor]="menu"class="dp" *ngIf="!user.avatar" src="../assets/04.png">
+         
 
         </a>
         <mat-menu #menu="matMenu">

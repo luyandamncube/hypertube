@@ -102,19 +102,23 @@ export class SignupComponent implements OnInit {
 
       })
       .catch((error) => {
+        this.loading = false; 
           this.snackBar.open( error.message, 'close', {
             duration: 4000,
           });
         }
       );
-      this.loading = false; 
+
 
       }
       
 
-    }catch(err){
-      console.log(err);
+    }catch(error){
+      this.loading = false;
       this.success = false;
+      this.snackBar.open( error.message, 'close', {
+        duration: 4000,
+      });
     }
     /*
     try{

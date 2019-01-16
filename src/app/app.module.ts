@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, 
@@ -44,12 +44,13 @@ import { NotfoundComponent } from './notfound/notfound.component';
 //Auth Services
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
-// import { LoginService } from './services/login.service';
 import { ProfileComponent } from './profile/profile.component';
 import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { SetpassComponent } from './setpass/setpass.component';
 import { SuccessComponent } from './success/success.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
+//HTTP requests
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
@@ -72,8 +73,8 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NoopAnimationsModule,
-    // BrowserAnimationsModule,
+    // NoopAnimationsModule,
+    BrowserAnimationsModule,
     LayoutModule,
     //Imports for Angular Material design
     MatToolbarModule, MatButtonModule, MatSidenavModule,
@@ -88,7 +89,9 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
     //Auth
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    //http requests
+    HttpClientModule
   ],
   providers: [AngularFirestore, AuthService, AuthGuard],
   bootstrap: [AppComponent]

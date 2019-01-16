@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, isDevMode } from '@angular/core';
 import { Router } from "@angular/router";
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore,  } from '@angular/fire/firestore';
@@ -64,7 +64,7 @@ export class AuthService {
   }
   loading = false;
   ngOnInit(){
-
+ 
   }
 
     
@@ -132,7 +132,7 @@ export class AuthService {
   }
 
   createAccount(email, password){
-    this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+    this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password).catch((error) => {
         this.snackBar.open( error.message, 'close', {
           duration: 4000,
         });
@@ -143,43 +143,24 @@ export class AuthService {
 
   login(loginmethod, email, password){
     console.log(loginmethod);
-     if (loginmethod == 'facebook.com'){
-      this.signInWithFacebook().then((res) => {
-
-      })
-      .catch((err) => console.log(err));
-     } else if (loginmethod == 'google.com'){
-       this.signInWithGoogle().then((res) => {
-
-      })
-      .catch((err) => console.log(err));
+    if (loginmethod == 'facebook.com'){
+      return this.signInWithFacebook();
+    } else if (loginmethod == 'google.com'){
+      return this.signInWithGoogle();
     } else if (loginmethod == 'email'){
-      this.signInRegular(email,password).then((res) => {
-
-      })
-      .catch((err) => console.log(err));
-      }else if (loginmethod == 'intra.42.fr'){
-        this.signInWith42();
-      /*.then((res) => {
-        this.getUserDocument();
-        this.ngZone.run(() => this.router.navigate(['setpass']));
-        })
-      .catch((err) => console.log(err));
-      */
+      return this.signInRegular(email,password);
+    } else if (loginmethod == 'intra.42.fr'){
+      this.signInWith42();
     }
 
   }
   signInWith42(){
- //When deployed on firebase
-//  return window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=https%3A%2F%2Fhypertube-16d52.firebaseapp.com%2Fhome&response_type=code';
-   //When on localhost
-   return window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fhome&response_type=code';
-    /*
-    return window.location.href = 'https://api.intra.42.fr/oauth/authorize?
-    client_id=b654f310dbf2bada79b1ed5cb10d6b19ece7fc5649ad79ca9e4dbfc349fd082c&
-    redirect_uri=http%3A%2F%2Flocalhost%3A4200%2FLogin&
-    response_type=code'
-    */
+    //Hosted locally
+    if (isDevMode())
+      window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin&response_type=code';
+    else
+    //Deployed on firebase
+      window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=https%3A%2F%2Fhypertube-16d52.firebaseapp.com%2Flogin&response_type=code';
   }
 
   signInWithFacebook() {
@@ -191,14 +172,14 @@ export class AuthService {
 
       // this.loginmethod = result.credential.providerId; 
       this.getUserDocument(auth.currentUser.uid);
-      console.log("is new user: "+ result.additionalUserInfo.isNewUser);
+      console.log("is new user: " + result.additionalUserInfo.isNewUser);
       if (result.additionalUserInfo.isNewUser === true){
         this.ngZone.run(() => this.router.navigate(['success']));
       }else{
         this.ngZone.run(() => this.router.navigate(['verifyemail']));
       }
     }).catch((error) =>{
-      
+
       // Handle errors here
       if (error.code === 'auth/account-exists-with-different-credential') {
         // Step 2.
@@ -255,9 +236,7 @@ export class AuthService {
               //ADD "Successfully linked" component here
             }).catch( (errorInLinking) => {
               // console.log(errorInLinking);
-              this.snackBar.open( errorInLinking, 'close', {
-                duration: 4000,
-              });
+
             });
           });
       });
@@ -293,12 +272,52 @@ export class AuthService {
 
   signInRegular(email, password) {
     var auth = firebase.auth();
-    this.loginmethod = 'email';
-
-    console.log(auth.currentUser.uid);
-    this.getUserDocument(auth.currentUser.uid);
-    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);//then
+    return auth.signInWithEmailAndPassword(email, password).then((result) => {
+      this.getUserDocument(auth.currentUser.uid);
+      console.log("is new user: "+ result.additionalUserInfo.isNewUser);
+      if (result.additionalUserInfo.isNewUser === true){
+        this.ngZone.run(() => this.router.navigate(['success']));
+      }else{
+        this.ngZone.run(() => this.router.navigate(['verifyemail']));
+      }
+    }).catch((error) => {
+        // console.log("Error signing in with Google:", error.message);
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
+    });
   }
+
+  /*
+    var auth = firebase.auth();
+    this.loginmethod = 'email';
+    //BUG: signInWithEmailAndPassword not returning a promise?
+    //Workaround:
+    var promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+      this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);
+      this.getUserDocument(auth.currentUser.uid);
+      auth.fetchSignInMethodsForEmail(email).then((providers) => {
+        if (providers.length > 0) {
+          //Sign in
+          this.ngZone.run(() => this.router.navigate(['verifyemail']));
+        } else {
+          // new user
+          console.log("new user...");
+          this.ngZone.run(() => this.router.navigate(['success']));
+        }
+      }).catch((error) => {
+        this.snackBar.open( error.message, 'close', {
+          duration: 4000,
+        });
+        });
+        // console.log("Async Work Complete");
+        resolve();
+      }, 1000);
+    });
+    
+    return promise;
+  */
   //Get methods for user info
   getUsername(){
     return this.userDetails.displayName;
