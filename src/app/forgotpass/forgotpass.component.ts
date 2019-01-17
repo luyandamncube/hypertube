@@ -49,7 +49,6 @@ export class ForgotpassComponent implements OnInit {
           duration: 4000,
         });
       });
-
   }
   get email(){
     return this.emailform.get('email');

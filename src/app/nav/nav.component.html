@@ -1,3 +1,5 @@
+
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -63,11 +65,10 @@
         </mat-form-field>
 
         <div class="spacer"></div>
-        <a style="float: right;" >
-         <img [matMenuTriggerFor]="menu"class="dp" *ngIf="user.avatar" src="{{user.avatar}}">
-         <img [matMenuTriggerFor]="menu"class="dp" *ngIf="!user.avatar" src="../assets/04.png">
-         
+        <a [matMenuTriggerFor]="menu" style="float: right;" >
+         <img class="dp" *ngIf="avatar" src="{{avatar}}">
 
+         <img class="dp" *ngIf="!avatar" src="../assets/04.png">
         </a>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>Language</button>
@@ -83,6 +84,9 @@
             
     <section>
     <!-- where routed components will appear-->
+    <div *ngIf="loading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
       <router-outlet name="index"></router-outlet>
     </section>
   </mat-sidenav-content>

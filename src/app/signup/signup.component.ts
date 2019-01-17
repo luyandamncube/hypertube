@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { tap, first } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { error } from 'util';
 
 @Component({
   selector: 'app-signup',
@@ -56,7 +57,6 @@ export class SignupComponent implements OnInit {
     ]],
     }, {validators: this.checkPasswords });
   }
-
   //Accessors for ngIF error handling
   get username(){
     return this.signupform.get('username');
@@ -70,67 +70,39 @@ export class SignupComponent implements OnInit {
   get confirm(){
     return this.signupform.get('confirm');
   }
-
   createUser(email, password){
     this.quickloginemail = email;
     this.quickloginpass = password;
-    var error = this.authService.createAccount(this.quickloginemail , this.quickloginpass );
-    if (error == false){
-
-      return (false);
-    }else{
-      return(true);
-    }
+    return this.authService.createAccount(this.quickloginemail , this.quickloginpass );
+    // if (error == false){
+    //   return (false);
+    // }else{
+    //   return(true);
+    // }
   }
   signInWithEmail(){
     this.authService.signInRegular(this.quickloginemail, this.quickloginpass); 
   }
   async submitHandler(){
     this.loading = true;
-
     var formValue = this.signupform.value;
-
     try{
-      var error = this.createUser(formValue.email, formValue.password);
-      if (error == true){
+      return this.createUser(formValue.email, formValue.password)
+      .then(() => {
         this.success = true;
-      var currentuser;
-      //Quick login user
-      this.authService.signInRegular(formValue.email, formValue.password).then((res) => {
-        currentuser = this.authService.getUserID();
-        this.authService.addDocument(currentuser,formValue.username, formValue.email, '', 'false','true', '', '');
-
+        this.authService.signInRegular(formValue.email, formValue.password)
       })
-      .catch((error) => {
-        this.loading = false; 
-          this.snackBar.open( error.message, 'close', {
-            duration: 4000,
-          });
-        }
-      );
+      .then(() => {
+         var currentuser;
+          currentuser = this.authService.getUserID();
+          this.authService.addDocument(currentuser,formValue.username, formValue.email, '', 'false','true', '', '');
+        })
 
-
-      }
-      
-
-    }catch(error){
-      this.loading = false;
+    }catch{(error) => {
+      this.loading = false; 
       this.success = false;
       this.snackBar.open( error.message, 'close', {
         duration: 4000,
       });
-    }
-    /*
-    try{
-      await this.afs.collection('users').add(formValue);
-      console.log(formValue);
-      this.success = true;
-    }catch(err){
-      console.log(err);
-    }
-    */
-  }
-
-
-
-}
+    }}
+}}

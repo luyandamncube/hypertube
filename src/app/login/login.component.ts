@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
 
     //URL capture for 42 auth token
     if (this.route.snapshot.queryParams.code) {
-      console.log(this.route.snapshot.queryParams.code);
 			this.captureAuthToken(this.route.snapshot.queryParams.code);
     }
 
@@ -73,7 +72,6 @@ export class LoginComponent implements OnInit {
   }
 
   captureAuthToken(token){
-    // console.log(isDevMode());
     let uri = isDevMode() ? 'http://localhost:4200/login' : 'https://hypertube-16d52.firebaseapp.com/login' ;
     const parameters = {
 			code: token,
@@ -82,61 +80,37 @@ export class LoginComponent implements OnInit {
 			client_secret: '171423ed37c14a1020ddeb7ff0af21b45b7a299459ef556443b358222a9ef19d',
 			redirect_uri: uri
     };
-    // console.log('code: '+parameters.code);
-    // console.log('grant_type: '+parameters.grant_type);
-    // console.log('client_id: '+parameters.client_id);
-    // console.log('client_secret: '+parameters.client_secret);
-    // console.log('redirect_uri: '+parameters.redirect_uri);
-
     return this.http.post('https://api.intra.42.fr/oauth/token', parameters).subscribe(async (res) => {
       this.loading = true;
       const graphApiUrl = 'https://api.intra.42.fr/v2/me?access_token=' + res['access_token'];
       let headers = { headers: new HttpHeaders({ 'content-Type': 'application/vnd.api+json' }) };
       
       await this.http.get(graphApiUrl, headers).subscribe(async (user) => {
-        console.log(user['data']['attributes']);
-        
-      await this._firebaseAuth.auth.fetchSignInMethodsForEmail(user['data']['attributes']['email']).then(async (providers) => {
-        // console.log("number of login methods: "+providers.length)
+      await this._firebaseAuth.auth.fetchSignInMethodsForEmail(user['data']['attributes']['email'])
+      .then(async (providers) => {
+          var randompass = Math.random().toString(36).slice(-8);
+          // console.log("random pass gen: "+randompass);
           if (providers.length > 0) {
             //Sign in
             await this.authService.signInRegular(user['data']['attributes']['email'], 'temppass');
+            // console.log(user['data']['attributes']);
             console.log("Existing user");
           } else {
-            // new user
+            // new user, UNTESTED
             console.log("New user");
-            await this.authService.createAccount(user['data']['attributes']['email'], 'temppass');
-
-            await this.authService.signInRegular(user['data']['attributes']['email'], 'temppass');
+            await this.authService.createAccount(user['data']['attributes']['email'], 'temppass')
+            .then(() => this.authService.loadhome(false))
+            .then(() => this.authService.signInRegular(user['data']['attributes']['email'], 'temppass'))
+            .then(async () => {
+              var userID = this.authService.getUserID();
+              //addDocument(docname,username, email, avatar,verified,newuser,favourites,history)
+              await this.authService.addDocument(userID, '',user['data']['attributes']['email'], user['data']['attributes']['image-url'], 'false', 'true','','');
+            })          
           }
-          //   this.authService.signInWithEmailAndPassword(this.email42, this.pass42)
-          // } else {
-          //   this.authService.login42(this.email42, this.pass42, data, this.username42, this.photo42)
-          // }
-          // console.log(providers);
         })
-
-      });
-
-      // console.log(res);
-  });
-    
-    //response
-    //http://localhost:4200/login?code=caf8ebdecf7c7e7abd70dd36f26458f7045b92e3b289584c37e6f53afab65eb9
+      })
+    })
   }
-  /*
-	fourtytwo(code: string) {
-		const params = {
-			code: code,
-			grant_type: 'authorization_code',
-			client_id: '52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8',
-			client_secret: '71ae6d11e5da5bdd03c9dcae3afe961c16089038137df2da7875ebc33d33f820',
-			redirect_uri: 'http://localhost:4200/Login'
-		};
-
-		return this.sub42post = this.http.post('https://api.intra.42.fr/oauth/token', params)
-			.subscribe((res) => {
-  */
 
   //Accessors for ngIF error handling
   get email(){

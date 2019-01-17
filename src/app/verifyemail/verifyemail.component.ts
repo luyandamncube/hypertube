@@ -15,7 +15,6 @@ export class VerifyemailComponent implements OnInit {
   reset_sent = false;
   // pass = false;
   emailaddress = this.authService.getEmail();
-  loginmethod = this.authService.getLoginMethod();
   message = 'A verification email was sent to';
 
   //message = 'Please check your email inbox at';
@@ -30,8 +29,6 @@ export class VerifyemailComponent implements OnInit {
       this.sent = true;
       this.message = 'Please check your email inbox at';
     }
-
-
 
   ngOnInit() {
     if (this.authService.isVerified() == true)
