@@ -98,11 +98,13 @@ export class AuthService {
         .then((doc) => {
           if (doc.exists) {
             userdoc = doc.data();
+            console.log("existing user");
           }
           else{
-            //addDocument(docname,username, email, avatar,verified,newuser,favourites,history)
-            // this.addDocument(uid,'',this.displayEmail, this.profilePhoto, 'false', 'true','','');
-            // console.log("added doc!");
+            console.log("new user");
+            // addDocument(uid,username, email, avatar,verified,newuser,favourites,history);
+            this.addDocument(uid,'',this.displayEmail, this.profilePhoto, 'false', 'true','','');
+            console.log("added doc!");
             // console.log("avatar: "+ this.profilePhoto);
             // return promise;
           }
