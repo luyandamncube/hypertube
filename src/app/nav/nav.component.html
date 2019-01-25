@@ -9,7 +9,7 @@
     <mat-nav-list>
       <!-- <a mat-list-item [routerLink]="'/'">Home</a> -->
     <mat-accordion>
-      <a mat-list-item [routerLink]="'/'"> Movies</a>
+      <a mat-list-item [routerLink]="[ {outlets: {index: ['movies'] } } ]"> Movies</a>
       <a mat-list-item [routerLink]="'/'"> Series</a>
       
       <mat-expansion-panel>

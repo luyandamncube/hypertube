@@ -13,6 +13,7 @@ import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { SetpassComponent } from './setpass/setpass.component';
 import { SuccessComponent } from './success/success.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
+import { MoviesComponent } from './movies/movies.component';
 //Auth
 import { AuthGuard } from './services/auth-guard.service';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
   {path: 'verifyemail', canActivate: [AuthGuard], component: VerifyemailComponent},
   {path: 'setpass',  canActivate: [AuthGuard], component: SetpassComponent},
+  // {path: 'movies',  canActivate: [AuthGuard], component: MoviesComponent},
   {path: 'success',  canActivate: [AuthGuard], component: SuccessComponent},
   {path: 'forgot', component: ForgotpassComponent},
   //auxilliary routing
@@ -39,6 +41,11 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+        outlet: 'index',
+      },
+      {
+        path: 'movies',
+        component: MoviesComponent,
         outlet: 'index',
       },
       {

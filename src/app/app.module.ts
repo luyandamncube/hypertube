@@ -38,6 +38,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 //Forms
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
+import { FormsModule } from '@angular/forms';
 //Database
 import { AngularFirestore,  } from '@angular/fire/firestore';
 import { NotfoundComponent } from './notfound/notfound.component'; 
@@ -50,7 +51,8 @@ import { SetpassComponent } from './setpass/setpass.component';
 import { SuccessComponent } from './success/success.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 //HTTP requests
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { MoviesComponent } from './movies/movies.component'; 
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import { HttpClientModule } from '@angular/common/http';
     VerifyemailComponent,
     SetpassComponent,
     SuccessComponent,
-    ForgotpassComponent
+    ForgotpassComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,7 @@ import { HttpClientModule } from '@angular/common/http';
     //Language selector
     MatButtonToggleModule,
     //Forms
-    ReactiveFormsModule,
+    ReactiveFormsModule,FormsModule,
     //Auth
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
