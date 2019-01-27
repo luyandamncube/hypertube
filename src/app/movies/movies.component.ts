@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
 
 
-// import { WebTorrent } from '../../../node_modules/webtorrent/webtorrent.min';
-import WebTorrent from 'webtorrent';
+ import { WebTorrent } from '../../../node_modules/webtorrent/webtorrent.min';
+// import * as WebTorrent from 'https://cdnjs.cloudflare.com/ajax/libs/webtorrent/0.103.0/webtorrent.min.js';
 
 
 import { DataService } from '../services/data.service';
@@ -33,7 +33,7 @@ export class MoviesComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
   ) { }
   ngOnInit( ) {
-    this.data.getMovies().subscribe(data => {
+    this.data.getMovies.subscribe(data => {
       this.loading = true;
       this.movieList = data;
       //Improve this, make a promise to get proper async loading state
@@ -47,7 +47,7 @@ export class MoviesComponent implements OnInit {
 
   stream(movie) {
     
-    let magnet = new String('magnet:?xt=urn:btih:');
+    let magnet = 'magnet:?xt=urn:btih:';
     const client = new WebTorrent();
     const video: HTMLElement = document.getElementById('playback');
     magnet = magnet + movie.torrents[0].hash + '&dn=';

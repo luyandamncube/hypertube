@@ -2,40 +2,18 @@
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 <h1 class="titleborder">Latest Movies</h1>
-
-<<<<<<< HEAD
 <div class="video-player">
   <video id='playback' [ngStyle]="{
     width : 320,
     height : 240
   }" controls></video>
 </div>
-<ul *ngIf="movieList">
-  <li *ngFor="let movie of movieList.data.movies">
-    <img [src]="movie.background_image" (click)="stream(movie)"/>  
-=======
 
-<!--
-<ul *ngIf="movieList">
-  <li *ngFor="let movie of movieList.data.movies">
-    <img [src]="movie.small_cover_image" /> 
-    <p> {{movie.title}} </p>
-    <p> {{movie.year}} </p>
->>>>>>> 34feeb0ecdfa9f0f3f265ff800c6184d60ea5036
-  </li>
-</ul>  
--->
-
-  <mat-grid-list *ngIf="movieList" cols="3" rowHeight="45:67">
-
-<<<<<<< HEAD
-</ul>
-
-=======
+<mat-grid-list *ngIf="movieList" cols="3" rowHeight="45:67">
     <mat-grid-tile class="movie_card" *ngFor="let movie of movieList.data.movies">
-      <img  *ngIf="movie" class="movie_poster" [src]="movie.medium_cover_image" />
+      <img (click)="stream(moive)" *ngIf="movie" class="movie_poster" [src]="movie.medium_cover_image" />
        <p class="movie_title"><b> {{movie.title | slice:0:20}}{{movie.title.length > 20 ? '...' : ''}} </b></p> 
        <!-- <p class="movie_title"> {{movie.year }}</p> -->
       </mat-grid-tile>
-  </mat-grid-list>
->>>>>>> 34feeb0ecdfa9f0f3f265ff800c6184d60ea5036
+</mat-grid-list>
+

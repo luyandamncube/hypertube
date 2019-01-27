@@ -55,8 +55,11 @@ import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MoviesComponent } from './movies/movies.component';
 
+
 // WebTorrent
-import { webtorrent} from 'webtorrent';
+import { WebTorrent} from 'webtorrent';
+import { ItemgridComponent } from './itemgrid/itemgrid.component';
+import { SeriesComponent } from './series/series.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,9 @@ import { webtorrent} from 'webtorrent';
     SetpassComponent,
     SuccessComponent,
     ForgotpassComponent,
-    MoviesComponent
+    MoviesComponent,
+    ItemgridComponent,
+    SeriesComponent
   ],
   imports: [
     BrowserModule,

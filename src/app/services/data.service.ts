@@ -12,4 +12,13 @@ export class DataService {
     return this.http.get('https://yts.am/api/v2/list_movies.json');
   }
 
+  getSeries()
+  {
+    return this.http.get('https://yts.am/api/v2/list_series.json');
+  }
+  getFiles(type: string) {
+    const url = 'https://yts.am/api/v2/list_' + type + '.json';
+    return this.http.get(url);
+  }
+
 }
