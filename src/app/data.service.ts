@@ -11,4 +11,5 @@ export class DataService {
   getMovies() {
     return this.http.get('https://yts.am/api/v2/list_movies.json');
   }
+
 }

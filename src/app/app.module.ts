@@ -52,7 +52,10 @@ import { SuccessComponent } from './success/success.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 //HTTP requests
 import { HttpClientModule } from '@angular/common/http';
-import { MoviesComponent } from './movies/movies.component'; 
+import { MoviesComponent } from './movies/movies.component';
+
+// WebTorrent
+import { webtorrent} from 'webtorrent';
 
 @NgModule({
   declarations: [

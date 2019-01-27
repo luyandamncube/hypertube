@@ -1,8 +1,15 @@
 <h1>Latest Movies</h1>
 
+<div class="video-player">
+  <video id='playback' [ngStyle]="{
+    width : 320,
+    height : 240
+  }" controls></video>
+</div>
 <ul *ngIf="movieList">
   <li *ngFor="let movie of movieList.data.movies">
-    <img [src]="movie.background_image" />  
+    <img [src]="movie.background_image" (click)="stream(movie)"/>  
   </li>
 
 </ul>
+
