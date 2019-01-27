@@ -1,31 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-//Use these to build forms
+// Use these to build forms
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { DataSource } from '@angular/cdk/collections';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { DataService } from '../data.service';
+
+
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
-  movieform : FormGroup;
-  constructor(
-    private fb : FormBuilder,
-  ) { }
 
-  ngOnInit() {
-
-    this.movieform = this.fb.group({
-      label: ['Download from a magnet link', [
-      ]],
-      input: ['Magnet', [
-      ]],
-  });
-
+  movieList: Object;
+  constructor (private data: DataService) { }
+  ngOnInit( ) {
+    this.data.getMovies().subscribe(data => {
+      this.movieList = data;
+      console.log(this.movieList);
+    });
   }
 
-    //Accessors for ngIF error handling
-    get input(){
-      return this.movieform.get('input');
-    }
-
 }
+
