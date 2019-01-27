@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "node patch.js"
   },
   "private": true,
   "dependencies": {
@@ -25,8 +26,10 @@
     "@types/webtorrent": "^0.98.4",
     "angular2-fontawesome": "^5.2.1",
     "angularfire2": "^5.1.1",
+    "buffer": "^5.2.1",
     "core-js": "^2.5.4",
     "cors": "^2.8.5",
+    "events": "^3.0.0",
     "firebase": "^5.8.0",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
@@ -34,6 +37,8 @@
     "require": "^2.4.20",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.3.3",
+    "stream": "0.0.2",
+    "timers": "^0.1.1",
     "tslib": "^1.9.0",
     "webtorrent": "^0.103.0",
     "webtorrent-cli": "^1.12.3",
