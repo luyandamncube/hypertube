@@ -9,13 +9,14 @@ import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, 
   MatIconModule, MatListModule, MatCardModule } from '@angular/material';
-//Imports for Angular Material login components
+//Imports for Angular Material
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatGridListModule} from '@angular/material/grid-list';
 //Import for dropdown menu
 import {MatMenuModule} from '@angular/material/menu';
 //imports for progress bars
@@ -88,6 +89,7 @@ import { webtorrent} from 'webtorrent';
     MatInputModule, MatFormFieldModule,  MatCheckboxModule,  
     MatChipsModule, MatCardModule, MatProgressSpinnerModule, 
     MatMenuModule, MatProgressBarModule,MatSnackBarModule,
+    MatGridListModule,
     //Language selector
     MatButtonToggleModule,
     //Forms

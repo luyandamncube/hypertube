@@ -35,12 +35,12 @@ export class NavComponent {
   }
   
   ngOnInit(){
-    this.loading = true;
+    // this.loading = true;
     this.loadmedia()
-    .then(() => {
-      if (this.avatar == undefined || this.avatar == null) 
-        this.loading = false;
-    });
+    // .then(() => {
+    //   if (this.avatar == undefined || this.avatar == null) 
+    //     this.loading = false;
+    // });
 
     // .then(() => this.loading = false)
     // this.avatar =  this.authService.avatar;
