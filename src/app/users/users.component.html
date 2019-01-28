@@ -1,24 +1,16 @@
-<mat-card> 
+<!-- Need to seperate each user profile click... -->
+<mat-card class="usercard" *ngFor="let user of userinfo"> 
   <mat-card-header> 
-    <img mat-card-avatar src="assets/00.png">
-    <mat-card-title>Users works!</mat-card-title>
-    <mat-card-subtitle>It really works</mat-card-subtitle>
+    <div mat-card-avatar class="example-header-image">
+        <img (click)="hide = !hide" mat-card-avatar [src]="user.avatar">
+    </div>
+    <!-- <mat-card-subtitle>Some interesting user info</mat-card-subtitle> -->
+    <mat-card-content *ngIf="!hide">
+    <mat-card-title>{{user.username}}</mat-card-title>
+    <mat-card-subtitle>Hypertube user </mat-card-subtitle>
+      <p>Last watched: {{user.history}}</p>
+      <p>Favourited: {{user.favourites}}</p>
+    </mat-card-content>
   </mat-card-header> 
 </mat-card>
-
-<mat-card> 
-  <mat-card-header> 
-    <img mat-card-avatar src="assets/00.png">
-    <mat-card-title>Users works!</mat-card-title>
-    <mat-card-subtitle>It really works</mat-card-subtitle>
-  </mat-card-header> 
-</mat-card>
-
-
-<mat-card> 
-  <mat-card-header> 
-    <img mat-card-avatar src="assets/00.png">
-    <mat-card-title>Users works!</mat-card-title>
-    <mat-card-subtitle>It really works</mat-card-subtitle>
-  </mat-card-header> 
-</mat-card>
+<br><br>

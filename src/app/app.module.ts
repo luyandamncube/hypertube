@@ -9,13 +9,14 @@ import { NavComponent } from './nav/nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, 
   MatIconModule, MatListModule, MatCardModule } from '@angular/material';
-//Imports for Angular Material login components
+//Imports for Angular Material components
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
 //Import for dropdown menu
 import {MatMenuModule} from '@angular/material/menu';
 //imports for progress bars
@@ -50,7 +51,8 @@ import { SetpassComponent } from './setpass/setpass.component';
 import { SuccessComponent } from './success/success.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
 //HTTP requests
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
+import { MoviesComponent } from './movies/movies.component'; 
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import { HttpClientModule } from '@angular/common/http';
     VerifyemailComponent,
     SetpassComponent,
     SuccessComponent,
-    ForgotpassComponent
+    ForgotpassComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule, MatFormFieldModule,  MatCheckboxModule,  
     MatChipsModule, MatCardModule, MatProgressSpinnerModule, 
     MatMenuModule, MatProgressBarModule,MatSnackBarModule,
+    MatGridListModule,
     //Language selector
     MatButtonToggleModule,
     //Forms

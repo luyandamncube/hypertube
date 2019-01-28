@@ -13,6 +13,7 @@ import { VerifyemailComponent } from './verifyemail/verifyemail.component';
 import { SetpassComponent } from './setpass/setpass.component';
 import { SuccessComponent } from './success/success.component';
 import { ForgotpassComponent } from './forgotpass/forgotpass.component';
+import { MoviesComponent } from './movies/movies.component';
 //Auth
 import { AuthGuard } from './services/auth-guard.service';
 
@@ -34,6 +35,11 @@ const routes: Routes = [
       {
         path: 'settings',
         component: SettingsComponent,
+        outlet: 'index',
+      },
+      {
+        path: 'movies',
+        component: MoviesComponent,
         outlet: 'index',
       },
       {
