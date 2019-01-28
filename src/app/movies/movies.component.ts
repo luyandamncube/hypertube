@@ -13,10 +13,20 @@ import { map } from 'rxjs/operators';
 })
 export class MoviesComponent implements OnInit {
   movieList: Object;
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  //Breakpoint observers for different sizes 
+    isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
+    isTablet$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet)
+    .pipe(
+      map(result => result.matches)
+    );
+    isWeb$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Web)
+    .pipe(
+      map(result => result.matches)
+    );
+  
   constructor(
     private data: DataService,
     private breakpointObserver: BreakpointObserver,
