@@ -85,16 +85,7 @@ export class AuthService {
       });
     });
   }
-  getCollection(){
-    
-    // this.userloggedin = this.db.collection("users");
-    this.db.collection("users").get().then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-      });
-  });
-  }
+
   //Get entry from 'users' collection
   getUserDocument(uid){
     // this.loading = true;

@@ -4,9 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-
-
- import { WebTorrent } from '../../../node_modules/webtorrent';
+import { WebTorrent } from '../../../node_modules/webtorrent';
 // import * as WebTorrent from 'https://cdnjs.cloudflare.com/ajax/libs/webtorrent/0.103.0/webtorrent.min.js';
 
 
@@ -14,6 +12,8 @@ import { DataService } from '../services/data.service';
 // Mobile view breakpoints
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+//Paginator
+import {PageEvent} from '@angular/material';
 
 @Component({
   selector: 'app-movies',
@@ -27,13 +27,21 @@ export class MoviesComponent implements OnInit {
       map(result => result.matches)
     );
 
+  //Paginator
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  // MatPaginator Output
+  pageEvent: PageEvent;
+
+
   movieList: Object;
   constructor (
     private data: DataService,
     private breakpointObserver: BreakpointObserver,
   ) { }
   ngOnInit( ) {
-    this.data.getMovies().subscribe(data => {
+    this.data.getFiles("movies",1).subscribe(data => {
       this.loading = true;
       this.movieList = data;
       // Improve this, make a promise to get proper async loading state
@@ -47,12 +55,12 @@ export class MoviesComponent implements OnInit {
 
   stream(movie) {
     let magnet = 'magnet:?xt=urn:btih:';
-    const client = new WebTorrent();
+    // const client = new WebTorrent();
     const video: HTMLElement = document.getElementById('playback');
     magnet = magnet + movie.torrents[0].hash + '&dn=';
     magnet = magnet + movie.torrents[0].url;
     magnet = magnet + 'tr=http://track.one:1234/announce&tr=udp://track.two:80';
-
+    /*
     client.add(magnet, function(torrent){
       const file = torrent.files.find(function(file){
         return file.name.endsWith('mp4');
@@ -62,7 +70,7 @@ export class MoviesComponent implements OnInit {
         mute : true
       }]);
     });
-    
+    */
     console.log(magnet);
     console.log(movie.torrents[0].url);
   }
@@ -75,6 +83,9 @@ export class MoviesComponent implements OnInit {
     console.log(magnet);
     return (magnet);
   }*/
+  onScroll() {
+    console.log('scrolled!!');
+  }
 
 }
 

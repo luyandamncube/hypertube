@@ -17,9 +17,15 @@ export class DataService {
   {
     return this.http.get('https://yts.am/api/v2/list_series.json');
   }
-  getFiles(type: string) {
-    const url = 'https://yts.am/api/v2/list_' + type + '.json';
+  getFiles(type: string, page) {
+    const url = 'https://yts.am/api/v2/list_' + type + '.json?page='+page;
     return this.http.get(url);
   }
+/*
+  getWithParams(type: string, params : Array)
+  {
+    const url='https://yts.am/api/v2/list_' + type + '.json'+params['']
+  }
+  */
 
 }

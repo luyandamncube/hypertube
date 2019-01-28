@@ -11,9 +11,30 @@
 <script src="../../../node_modules/webtorrent/webtorrent.min.js"></script>
 <mat-grid-list *ngIf="movieList" cols="3" rowHeight="45:67">
     <mat-grid-tile class="movie_card" *ngFor="let movie of movieList.data.movies">
-      <img (click)="stream(moive)" *ngIf="movie" class="movie_poster" [src]="movie.medium_cover_image" />
+      <img (click)="stream(movie)" *ngIf="movie" class="movie_poster" [src]="movie.medium_cover_image" />
        <p class="movie_title"><b> {{movie.title | slice:0:20}}{{movie.title.length > 20 ? '...' : ''}} </b></p> 
        <!-- <p class="movie_title"> {{movie.year }}</p> -->
       </mat-grid-tile>
 </mat-grid-list>
 
+<!--
+<div
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="1000"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false">
+</div>
+<mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageEvent = $event">
+</mat-paginator>
+
+<div *ngIf="pageEvent">
+  <h5>Page Change Event Properties</h5>
+  <div>List length: {{pageEvent.length}}</div>
+  <div>Page size: {{pageEvent.pageSize}}</div>
+  <div>Page index: {{pageEvent.pageIndex}}</div>
+</div>
+-->

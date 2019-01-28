@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService} from '../services/auth.service';
+import { GetusersService } from '../services/getusers.service';
 
 @Component({
   selector: 'app-users',
@@ -7,14 +7,28 @@ import { AuthService} from '../services/auth.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-
+  userinfo: Object;
   constructor(
-    private authService: AuthService, 
+    private getusers: GetusersService, 
   ) { }
 
   ngOnInit() {
     console.log("getting users...");
-    this.authService.getCollection();
-  }
+    this.userinfo = [];
+    this.userinfo = this.getusers.getCollection();
+    console.log(this.userinfo);
 
+    /*
+        this.data.getFiles("movies",1).subscribe(data => {
+      this.loading = true;
+      this.movieList = data;
+      // Improve this, make a promise to get proper async loading state
+      if (this.movieList) {
+        this.loading = false;
+      }
+
+      console.log(this.movieList);
+    });
+    */
+  }
 }

@@ -61,6 +61,9 @@ import { WebTorrent} from 'webtorrent';
 import { ItemgridComponent } from './itemgrid/itemgrid.component';
 import { SeriesComponent } from './series/series.component';
 
+//Infinite Scroll
+import {InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,7 +107,9 @@ import { SeriesComponent } from './series/series.component';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     //http requests
-    HttpClientModule
+    HttpClientModule,
+    //Infinite Scroll
+    InfiniteScrollModule,MatPaginatorModule
   ],
   providers: [AngularFirestore, AuthService, AuthGuard],
   bootstrap: [AppComponent]
