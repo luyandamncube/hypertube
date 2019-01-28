@@ -20,3 +20,12 @@ Styled using [Angular Material](https://material.angular.io/).
 
 Database managment using [Firebase](https://firebase.google.com/). Hosted [here](https://hypertube-16d52.firebaseapp.com/)
 
+## Packages used
+
+```
+npm install ngx-infinite-scroll
+npm install i -g typescript
+npm install --save font-awesome angular2-fontawesome
+ng add @angular/material 
+
+```
