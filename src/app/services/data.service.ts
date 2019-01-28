@@ -22,4 +22,8 @@ export class DataService {
     return this.http.get(url);
   }
 
+  getTorrent(url: string) {
+    return this.http.get(url);
+  }
+
 }

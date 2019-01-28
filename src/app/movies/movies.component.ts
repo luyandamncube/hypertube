@@ -4,16 +4,11 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-
-
- import { WebTorrent } from '../../../node_modules/webtorrent';
-// import * as WebTorrent from 'https://cdnjs.cloudflare.com/ajax/libs/webtorrent/0.103.0/webtorrent.min.js';
-
-
 import { DataService } from '../services/data.service';
 // Mobile view breakpoints
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
+import { Torrent } from 'webtorrent';
 
 @Component({
   selector: 'app-movies',
@@ -45,36 +40,57 @@ export class MoviesComponent implements OnInit {
     });
   }
 
+
   stream(movie) {
-    let magnet = 'magnet:?xt=urn:btih:';
+   
+    const WebTorrent = require ('webtorrent');
     const client = new WebTorrent();
     const video: HTMLElement = document.getElementById('playback');
+    let magnet = 'magnet:?xt=urn:btih:';
     magnet = magnet + movie.torrents[0].hash + '&dn=';
     magnet = magnet + movie.torrents[0].url;
     magnet = magnet + 'tr=http://track.one:1234/announce&tr=udp://track.two:80';
+    magnet = magnet + '&tr=udp://open.demonii.com:1337/announce&tr=udp://tracker.openbittorrent.com:80';
+    client.add(magnet, function(torrent) {
 
-    client.add(magnet, function(torrent){
-      const file = torrent.files.find(function(file){
-        return file.name.endsWith('mp4');
+
+      console.log('called');
+      const file = torrent.files.find(function(file) {
+        console.log(file);
+        return file.name.endsWith('');
+      });
+      console.log('I found him: ' + file);
+      torrent.on('download', function(bytes) {
+        console.log('just downloaded: ' + bytes);
+        console.log('total downloaded: ' + torrent.downloaded);
+        console.log('download speed: ' + torrent.downloadSpeed);
+        console.log('progress: ' + torrent.progress);
+      });
+      torrent.on('ready', function() {
+        console.log('The Torrent is ready');
+      });
+      torrent.on('warning', function (err) {
+        console.log('error: ' + err);
+      });
+
+      torrent.on('meatadata', function() {
+        torrent.files.array.forEach(element => {
+          console.log(element);
+        });
       });
       file.appendTo(video, [{
         autoplay: true,
         mute : true
-      }]);
+      }], function(err, elem) {
+        if (err) {
+         throw err; // file failed to download or display in the DOM
+        }
+        console.log('New DOM node with the content', elem);
+      });
     });
-    
     console.log(magnet);
     console.log(movie.torrents[0].url);
   }
-// magnet:?xt=urn:btih:TORRENT_HASH&dn=Url+Encoded+Movie+Name&tr=http://track.one:1234/announce&tr=udp://track.two:80
-  /*makeMagnet(movie: Object)
-    let magnet = new String('magnet:?xt=urn:btih:');
-    magnet = magnet + movie.torrents[0].hash + '&dn=';
-    magnet = magnet + movie.torrents[0].url;
-    magnet = magnet + 'tr=http://track.one:1234/announce&tr=udp://track.two:80';
-    console.log(magnet);
-    return (magnet);
-  }*/
 
 }
 

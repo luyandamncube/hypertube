@@ -8,10 +8,9 @@
     height : 240
   }" controls></video>
 </div>
-<script src="../../../node_modules/webtorrent/webtorrent.min.js"></script>
 <mat-grid-list *ngIf="movieList" cols="3" rowHeight="45:67">
     <mat-grid-tile class="movie_card" *ngFor="let movie of movieList.data.movies">
-      <img (click)="stream(moive)" *ngIf="movie" class="movie_poster" [src]="movie.medium_cover_image" />
+      <img (click)="stream(movie)" *ngIf="movie" class="movie_poster" [src]="movie.medium_cover_image" />
        <p class="movie_title"><b> {{movie.title | slice:0:20}}{{movie.title.length > 20 ? '...' : ''}} </b></p> 
        <!-- <p class="movie_title"> {{movie.year }}</p> -->
       </mat-grid-tile>

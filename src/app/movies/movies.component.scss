@@ -1,5 +1,10 @@
 .movie_card{
     // position: relative;
+    
+}
+.movie_card:hover
+{
+    cursor: pointer;
 }
 .movie_poster{
     position: absolute;
