@@ -7,21 +7,18 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "node patch.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~7.1.0",
     "@angular/cdk": "~7.1.1",
     "@angular/common": "~7.1.0",
-    "@angular/compiler": "~7.1.0",
-    "@angular/core": "~7.1.0",
+    "@angular/core": "^7.2.2",
     "@angular/fire": "^5.1.1",
     "@angular/forms": "~7.1.0",
     "@angular/material": "^7.1.1",
     "@angular/platform-browser": "~7.1.0",
-    "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
     "@types/webtorrent": "^0.98.4",
     "angular2-fontawesome": "^5.2.1",
@@ -33,27 +30,38 @@
     "firebase": "^5.8.0",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
+<<<<<<< HEAD
     "ngx-infinite-scroll": "^7.0.1",
+=======
+    "json-loader": "^0.5.7",
+    "minimatch": "^3.0.4",
+>>>>>>> c34ff480a8c481f3c79f7d73e84ffff5e2e2d024
     "request": "^2.88.0",
     "require": "^2.4.20",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.3.3",
     "stream": "0.0.2",
     "timers": "^0.1.1",
-    "tslib": "^1.9.0",
-    "webtorrent": "^0.103.0",
+    "tslib": "^1.9.3",
+    "uniq": "^1.0.1",
     "webtorrent-cli": "^1.12.3",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^7.2.0",
+    "@angular-builders/dev-server": "^7.2.1",
     "@angular-devkit/build-angular": "^0.12.3",
     "@angular/cli": "~7.1.2",
+    "@angular/compiler": "^7.2.2",
     "@angular/compiler-cli": "^7.2.2",
     "@angular/language-service": "~7.1.0",
+    "@angular/platform-browser-dynamic": "^7.2.2",
     "@types/cors": "^2.8.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "angular-builders": "^1.0.0",
+    "browserify": "^16.2.3",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -63,9 +71,11 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "ts-loader": "^5.3.3",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.1.6",
-    "webpack-config": "^7.5.0"
+    "webpack-config": "^7.5.0",
+    "webtorrent": "^0.103.0"
   }
 }

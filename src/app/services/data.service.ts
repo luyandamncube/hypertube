@@ -28,4 +28,8 @@ export class DataService {
   }
   */
 
+  getTorrent(url: string) {
+    return this.http.get(url);
+  }
+
 }
