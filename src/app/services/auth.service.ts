@@ -1,6 +1,6 @@
 import { Injectable, NgZone, isDevMode } from '@angular/core';
 import { Router } from "@angular/router";
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore,  } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
@@ -144,7 +144,7 @@ export class AuthService {
     } else if (loginmethod == 'email'){
       return this.signInRegular(email,password);
     } else if (loginmethod == 'intra.42.fr'){
-      this.signInWith42();
+      // this.signInWith42();
     }
   }
   signInWithFacebook() {
@@ -201,16 +201,7 @@ export class AuthService {
         });
     }));
   }
-  signInWith42(){
-    if (isDevMode() === true){
-      //Hosted locally
-      window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Flogin&response_type=code';
-    }
-    else{
-      //Deployed on firebase
-      window.location.href = 'https://api.intra.42.fr/oauth/authorize?client_id=52ed13ae84d61441732eed003680d2c0033d7211f69398b62fdf42f360d062d8&redirect_uri=https%3A%2F%2Fhypertube-16d52.firebaseapp.com%2Flogin&response_type=code';
-    }
-  }
+
   signInRegular(email, password) {
     var auth = firebase.auth();
     return auth.signInWithEmailAndPassword(email, password)

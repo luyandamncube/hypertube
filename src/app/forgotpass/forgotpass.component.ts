@@ -3,7 +3,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 //Auth
 import { AuthService } from '../services/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router  } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 

@@ -9,7 +9,7 @@ import { AuthService } from './services/auth.service';
 })
 
 export class AppComponent {
-  title = 'Hypertube';
+  title = 'Onboardingv2';
 
 
   constructor(private authService: AuthService, ) {}

@@ -14,7 +14,7 @@ import { load } from '@angular/core/src/render3';
   styleUrls: ['./nav.component.scss'],
 })
 export class NavComponent {
-  apptitle = 'Hypertube';
+  apptitle = 'Onboardingv2';
   loading = false;
   name: '';
   avatar: '';

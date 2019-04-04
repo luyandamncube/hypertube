@@ -3,7 +3,7 @@ import { Component, OnInit, NgZone, isDevMode } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 //Auth
 import { AuthService } from '../services/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 //POST
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from "@angular/router";
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   captureAuthToken(token){
-    let uri = isDevMode() ? 'http://localhost:4200/login' : 'https://hypertube-16d52.firebaseapp.com/login' ;
+    let uri = isDevMode() ? 'http://localhost:4200/login' : 'https://onboardingv2.firebaseapp.com/login' ;
     const parameters = {
 			code: token,
 			grant_type: 'authorization_code',

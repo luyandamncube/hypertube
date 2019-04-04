@@ -25,8 +25,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 //imports for Angular firebase
 import { AngularFireModule } from '@angular/fire'; 
 import { environment } from '../environments/environment';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 //Components
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';

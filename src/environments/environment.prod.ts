@@ -1,11 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyBZOhdlg-kGL0gZU8TLFpfx2DmX8lBy_Fg",
-    authDomain: "hypertube-16d52.firebaseapp.com",
-    databaseURL: "https://hypertube-16d52.firebaseio.com",
-    projectId: "hypertube-16d52",
-    storageBucket: "hypertube-16d52.appspot.com",
-    messagingSenderId: "884118765765"
+    apiKey: "AIzaSyDi6Amg1esYgd8HBbKkKrgc3MOlkz-l_j8",
+    authDomain: "onboardingv2.firebaseapp.com",
+    databaseURL: "https://onboardingv2.firebaseio.com",
+    projectId: "onboardingv2",
+    storageBucket: "onboardingv2.appspot.com",
+    messagingSenderId: "170675170435"
+    //
   }
 };

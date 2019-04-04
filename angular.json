@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Hypertube": {
+    "Onboardingv2": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Hypertube",
+            "outputPath": "dist/Onboardingv2",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Hypertube:build"
+            "browserTarget": "Onboardingv2:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Hypertube:build:production"
+              "browserTarget": "Onboardingv2:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Hypertube:build"
+            "browserTarget": "Onboardingv2:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
         }
       }
     },
-    "Hypertube-e2e": {
+    "Onbordingv2-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -117,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Hypertube:serve"
+            "devServerTarget": "Onboardingv2:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Hypertube:serve:production"
+              "devServerTarget": "Onboardingv2:serve:production"
             }
           }
         },
@@ -137,5 +137,5 @@
       }
     }
   },
-  "defaultProject": "Hypertube"
+  "defaultProject": "Onboardingv2"
 }
